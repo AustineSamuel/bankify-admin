@@ -1,0 +1,23 @@
+.loginPage{
+    width:100%;
+    height:100vh;
+    background:var(--color);
+    display:flex;
+    align-items: center;
+    justify-content:center;
+}
+
+.loginPage .form{
+    width:90%;
+    max-width:400px;
+    min-height: 300px;
+    border-radius:10px;
+    background:white;
+    box-shadow:1px 1px 10px 0px rgb(38, 36, 58);
+    padding:16px;
+    margin:0 auto;
+}
+.loginPage .form button{
+    width:100%;
+    border-radius:30px;
+}

@@ -1,0 +1,23 @@
+.userCard{
+    padding:10px;
+    border-radius:5px;
+    box-shadow:1px 1px 10px 0px rgb(241, 241, 243);
+    width:100%;
+    min-height:200px;
+}
+.userCard .userCardDetails{
+    padding:17px;
+}
+.userCard .userCardDetails p{
+border-bottom:1px solid rgb(233, 232, 238);
+}
+
+@media screen and (max-width:700px){
+    .otherCard{
+        margin-top:20px;
+        width:100%;
+    }
+    .dashboard{
+        padding:10px !important;
+    }
+}

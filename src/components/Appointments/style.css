@@ -1,0 +1,40 @@
+.appointments .card_appointments{
+background:white;
+border-radius:10px;
+box-shadow:1px 1px 10px 0px lightgrey;
+width:200px;
+min-height:100px;
+margin:10px;
+}
+
+
+.appointments{
+    padding:16px;
+}
+@media screen and (max-width:600px){
+  .appointments{
+    padding-top:20px;
+    margin-top:20px;
+  }
+}
+
+.appointment-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .appointment-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
