@@ -4,6 +4,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {db} from '../firebase.config';
+import {toast,Toaster} from 'react-hot-toast';
+
 import { getAllDoc } from '../Logics/getAllDoc';
 
 import * as React from 'react';
@@ -11,6 +14,11 @@ import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Chip from '@mui/material/Chip';
+import { docQr } from '../Logics/docQr';
+import { AddData } from '../Logics/addData';
+import { collection } from 'firebase/firestore';
+import { getCurrentTimestamp } from '../Logics/DateFunc';
+import {ClipLoader} from 'react-spinners';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,27 +39,17 @@ function getStyles(name, personName, theme) {
     };
   }
   
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
-
-
-
 
 export default function Notifications() {
+  const [notification,setNotification]=useState({
+    title:"",
+    body:"",
+    sent_at:getCurrentTimestamp()
+  })
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [age, setAge] =useState('');
+    
    const [users,setUsers]=useState([]);
+   const [isLoading,setIsLoading]=useState(false);
     const handleUserSelection = (event) => {
        /// setSelectedUsers(Array.from(event.target.selectedOptions, (option) => option.value));
     };
@@ -64,37 +62,58 @@ export default function Notifications() {
       const {
         target: { value },
       } = event;
+      const user=users.filter((user)=>user.username===value[0])[0];
+      if(!user)return console.log("cannot find user",user);
+      setSelectedUsers((prev)=>{
+        return [...prev,{...user}]
+      }
+        );
       setPersonName(
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
       );
     };
-
-
-    const handleSendNotification = () => {
-        // Logic to send notification to selected users
-        console.log("Notification sent to:", selectedUsers);
-    };
-
+    
     const getUsers=async ()=>{
-        const user=await getAllDoc("Users");
-        setUsers(user);
+        const users=await docQr("Users",{
+          max:800,
+          whereClauses:[{
+          field:"username",
+          operator:"!=",
+          value:""
+          }
+          ]
+      })
+          setUsers(users);
     }
     useEffect(()=>{
 getUsers();
     },[])
 
-
+const handleSendNotification =async () => {
+// Logic to send notification to selected users        
+setIsLoading(true);
+await Promise.all(selectedUsers.map(async (user,index)=>{
+await AddData(collection(db,"Notifications"), {...notification,uid:user.uid})
+}))
+setIsLoading(false);
+toast.success("Notification sent successfully");
+setNotification({
+   title:"",
+   body:""
+})
+};
 
 
 
 
     return (
         <div style={{ width: "100%", margin: "0 auto" }}>
+          <Toaster/>
             <h3>Send notification</h3><br />
             <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+      <FormControl sx={{ width: '100%' }} size="small">
+        <InputLabel id="demo-multiple-chip-label">Select users</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
@@ -111,28 +130,38 @@ getUsers();
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {users.map((user) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
+              key={user.uid}
+              value={user.username}
+              style={getStyles(user.username, personName, theme)}
             >
-              {name}
+              {user.username}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
     </div>
-            <br />
+            
             <MDBInput placeholder='Enter title' label='Title' style={{
                 width:"100%",
                 margin:10
+            }} onChange={(e)=>{
+              setNotification({
+                ...notification,
+                title:e.target.value
+              })
             }}/>
 
-<MDBInput label='Body' rows={4}/>
+<MDBInput label='Body' rows={4} onChange={(e)=>{
+              setNotification({
+                ...notification,
+                body:e.target.value
+              })
+            }}/>
 
             <br/>
-            <MDBBtn onClick={handleSendNotification}>Send Notification</MDBBtn>
+            <MDBBtn style={{width:"100%"}} onClick={handleSendNotification}>{isLoading ? <ClipLoader size={18} color="white"/>:"Send Notification"}</MDBBtn>
         </div>
     );
 }
