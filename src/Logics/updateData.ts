@@ -2,7 +2,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 
 
-export const updateRecordFields=async (updateCollection:string,doc_id:string,updateData={
+export const updateData=async (updateCollection:string,doc_id:string,updateData={
 
 })=>{
 const washingtonRef = doc(db, updateCollection, doc_id);

@@ -22,3 +22,26 @@ code {
 
 
 }
+
+@media screen and (min-width:700px) {
+*[class*=pcOnly]{
+  display:initial;
+}
+*[class*=mobileOnly]{
+  display:none !important;
+}
+}
+
+@media screen and (max-width:700px) {
+  .containerCtn{
+    padding:16px !important;
+  }
+
+  
+  *[class*=mobileOnly]{
+    display:initial;
+  }
+  *[class*=pcOnly]{
+    display:none !important;
+  }
+  }

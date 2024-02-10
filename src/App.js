@@ -13,6 +13,7 @@ import PaymentForm from './components/Payments/payment';
 import Page404 from './page404';
 import Login from './components/login/main';
 import AddUser from './components/addUser/addUser';
+import VerifiedUsers from './components/VerifiedUsers/VerifiedUsers';
 
 
 function App() {
@@ -73,7 +74,7 @@ if(!localStorage.getItem("bankifyUser")){
         <Route path="/Appointments" element={<Appointments/>} /> {/* Updated element prop */}
         <Route path='/Payment' element={<PaymentForm/>}/>
         <Route path='/AddUsers' element={<AddUser/>}/>
-
+        <Route path='/VerifiedUsers' element={<VerifiedUsers/>}/>
         <Route path='/*' element={<Page404/>}/>
         
       </Routes>

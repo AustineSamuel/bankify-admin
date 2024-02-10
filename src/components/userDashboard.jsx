@@ -41,7 +41,7 @@ export default function UserDashboard(){
             icon:"/images/verify.jpg",
             click:()=>{
                 console.log("clicked Verification");
-                navigate("/Verification")
+                navigate("/VerifiedUsers")
             }
         },
         {

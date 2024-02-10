@@ -30,6 +30,7 @@ const AddUser = () => {
     dateOfBirth: "",
     gender: ["Male","Female"],
     address: "",
+    status:['active','suspended'],
     contactNumber: "",
     biometricData: {
       facialFeatures: "",
@@ -45,7 +46,7 @@ const AddUser = () => {
   const [isSubmitting, setIsSubmitting] = useState(null);
 
 
-  const [newUserDetails, setNewUserDetails] = useState({ ...user,gender:"",permissions:"user"});
+  const [newUserDetails, setNewUserDetails] = useState({ ...user,gender:"",permissions:"user",status:"active"});
 const [isUploading,setIsUploading]=useState(false);
   const handleImageChange = async (e) => {
     setIsUploading(true)
@@ -63,7 +64,7 @@ const handleTextChange=(e,name)=>{
 const validateData = () => {
   const usernameRegex = /^[a-zA-Z0-9_]{3,}$/; // Username should be at least 3 characters long and can contain letters, numbers, and underscores
   const passwordRegex = /^.{6,}$/; // Password should be at least 6 characters long
-
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!usernameRegex.test(newUserDetails.username)) {
     toast.error("Please enter a valid username (at least 3 characters long and can contain letters, numbers, and underscores)");
     return false;
@@ -74,8 +75,13 @@ const validateData = () => {
     toast.error("Please select a valid user passport");
     return false;
   }
+  else if (!emailRegex.test(newUserDetails.email)) {
+    toast.error("Please enter a valid email address");
+    return false;
+  }
   else if (newUserDetails.biometricData.passport===""){
     toast.error("Please upload user passport (for face verification)")
+    return false;
   }
   return true; // Data is valid
 };
@@ -83,10 +89,8 @@ const validateData = () => {
 const submit=async ()=>{
   console.log(newUserDetails);
 if(!validateData())return;
+try{
   setIsSubmitting(true);
-  const serverURL=await uploadToFirebase(newUserDetails.biometricData.passport);
-  newUserDetails.biometricData.passport=serverURL;
-  console.log(newUserDetails);
 const existingUser=await docQr("Users",{
   max:1,
   whereClauses:[
@@ -107,6 +111,11 @@ if(existingUser.length > 0){
   setIsSubmitting(false);
   return toast.error("User with email or username already exists");
 }
+console.log("file",newUserDetails.biometricData.passport)
+const serverURL=await uploadToFirebase(newUserDetails.biometricData.passport);
+newUserDetails.biometricData.passport=serverURL;
+console.log(serverURL)
+
 
   const add=await AddData(collection(db,"Users"),{...newUserDetails,added_at:getCurrentTimestamp()})
   console.log(add);
@@ -115,6 +124,10 @@ if(existingUser.length > 0){
     navigate("/")
   },1000);
  // console.log(newUserDetails);
+}
+catch(err){
+  toast.error(err.message || "Something went wrong");
+}
 }
  // console.log(newUserDetails)
   let Inputs = []; // Initialize as an empty array

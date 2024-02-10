@@ -1,7 +1,7 @@
 import React, { useState,useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
-
+import {Avatar} from '@mui/material'
 function CustomAvatar({ src, alt ,size}) {
   const [loaded, setLoaded] = useState(false);
 if(!size)size=40
@@ -25,7 +25,7 @@ if(!size)size=40
   return (
     <div className="custom-avatar">
       {loaded ? (
-        <img
+        <Avatar
           src={src}
           alt={alt}
           style={{ width: size, height:size, borderRadius: "50%" }}
