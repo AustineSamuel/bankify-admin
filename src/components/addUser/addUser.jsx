@@ -16,6 +16,7 @@ import {useNavigate} from 'react-router-dom';
 import { collection } from 'firebase/firestore';
 import {db} from '../../firebase.config'
 import { getCurrentTimestamp } from '../../Logics/DateFunc';
+import { docQr } from '../../Logics/docQr_ORGate';
 
 
 
@@ -86,6 +87,26 @@ if(!validateData())return;
   const serverURL=await uploadToFirebase(newUserDetails.biometricData.passport);
   newUserDetails.biometricData.passport=serverURL;
   console.log(newUserDetails);
+const existingUser=await docQr("Users",{
+  max:1,
+  whereClauses:[
+    {
+      field:"username",
+      operator:"==",
+      value:newUserDetails.username
+    },
+    {
+      field:"email",
+      operator:"==",
+      value:newUserDetails.email
+    },
+  ]
+})
+
+if(existingUser.length > 0){
+  setIsSubmitting(false);
+  return toast.error("User with email or username already exists");
+}
 
   const add=await AddData(collection(db,"Users"),{...newUserDetails,added_at:getCurrentTimestamp()})
   console.log(add);
