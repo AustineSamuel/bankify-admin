@@ -47,7 +47,10 @@ setIsLoading(false);
 
 
       <div className="container">
-       {!isLoading ? <UserList users={users} onSuspend={handleSuspend} getUsers={getUsers} onDelete={handleDelete} onShowProfile={onShowProfile} />:<>
+       {!isLoading ? <>
+       <UserList users={users} onSuspend={handleSuspend} getUsers={getUsers} onDelete={handleDelete} onShowProfile={onShowProfile} />
+       {users.length <=0 && <div className='text-center'><img src='/images/noData.png'/><br/><span><b>NO DATA FOUND</b></span></div>}
+       </>:<>
        
        {[1,2,3,4,5].map(()=><UserItemSkeleton/>)
        

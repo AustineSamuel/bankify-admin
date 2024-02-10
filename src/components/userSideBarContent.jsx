@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { MDBListGroup, MDBBtn } from 'mdb-react-ui-kit';
-import { Home, List, Bookmark, Camera, UserPlus, MousePointer } from 'react-feather';
+import { Home, List, Bookmark, Camera, UserPlus, MousePointer, PlusSquare } from 'react-feather';
 import {useNavigate} from 'react-router-dom'
 const sideBarsList = [
   {
@@ -17,6 +17,22 @@ const sideBarsList = [
     name: "Appointments",
     link: "/Appointments",
     icon: <List />,
+    onClick: () => {
+      // Add logic to navigate to the user's profile page
+    }
+  },
+  {
+    name: "Add Appointment",
+    link: "/AddAppointment",
+    icon: <PlusSquare />,
+    onClick: () => {
+      // Add logic to navigate to the user's profile page
+    }
+  },
+  {
+    name: "Embassy List",
+    link: "/EmbassyList",
+    icon: <List/>,
     onClick: () => {
       // Add logic to navigate to the user's profile page
     }

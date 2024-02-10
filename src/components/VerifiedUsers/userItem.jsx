@@ -119,6 +119,9 @@ const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
         }}>{isDeleting ? <ClipLoader color='white' size={16} /> : "Delete"} </MDBBtn>
         <MDBBtn className="btn-sm" color="primary" onClick={() => {
           onShowProfile(user)
+          sessionStorage.setItem("uid",user.uid)
+          navigate("/Profile")
+        
         }}>Profile</MDBBtn>
       </div>
       <div className='mobileOnly'>
@@ -143,7 +146,12 @@ const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
               deleteUser(user);
 
             }}>Delete</MDBDropdownItem>
-            <MDBDropdownItem link onClick={() => onShowProfile(user)}>Profile</MDBDropdownItem>
+            <MDBDropdownItem link onClick={() =>{
+              onShowProfile(user)
+              sessionStorage.setItem("uid",user.uid)
+               navigate("/Profile")
+             } 
+            }>Profile</MDBDropdownItem>
           </MDBDropdownMenu>
         </MDBDropdown>
       </div>

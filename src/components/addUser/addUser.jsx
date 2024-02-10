@@ -17,6 +17,7 @@ import { collection } from 'firebase/firestore';
 import {db} from '../../firebase.config'
 import { getCurrentTimestamp } from '../../Logics/DateFunc';
 import { docQr } from '../../Logics/docQr_ORGate';
+import { generateUniqueString } from '../../Logics/date';
 
 
 
@@ -117,7 +118,7 @@ newUserDetails.biometricData.passport=serverURL;
 console.log(serverURL)
 
 
-  const add=await AddData(collection(db,"Users"),{...newUserDetails,added_at:getCurrentTimestamp()})
+  const add=await AddData(collection(db,"Users"),{...newUserDetails,added_at:getCurrentTimestamp(),uid:"id_"+""+Date.now()+""+generateUniqueString()})
   console.log(add);
   toast.success("User Added successfully")
   setTimeout(() => {

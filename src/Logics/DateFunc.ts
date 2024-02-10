@@ -32,3 +32,10 @@ export function formatDate_Name(date=new Date()) {
   const spacedString = convertCamelCaseToSpaced(camelCaseString);
   console.log(spacedString);  // Output: "never married"
   
+  export const convertToTitleCase = (str:string) => {
+    return str
+      .replace(/([A-Z])/g, " $1") // Add space before uppercase letters
+      .replace(/^./, ((char:string) => char.toUpperCase())) // Capitalize the first letter
+      .trim(); // Remove leading/trailing spaces
+  };
+  

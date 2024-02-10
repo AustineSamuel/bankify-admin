@@ -45,3 +45,10 @@ code {
     display:none !important;
   }
   }
+  .editProfile{
+  max-height:88vh;
+  overflow-x:hidden;
+  overflow-y:overflow;
+  padding-bottom:80px !important;
+
+  }

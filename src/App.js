@@ -14,6 +14,9 @@ import Page404 from './page404';
 import Login from './components/login/main';
 import AddUser from './components/addUser/addUser';
 import VerifiedUsers from './components/VerifiedUsers/VerifiedUsers';
+import AddEmbassis from './components/Appointments/AddEbassis';
+import AddAppointment from './components/Appointments/AddAppointment';
+import EmbassyList from './components/EmbassyList/EmbassyList';
 
 
 function App() {
@@ -75,7 +78,11 @@ if(!localStorage.getItem("bankifyUser")){
         <Route path='/Payment' element={<PaymentForm/>}/>
         <Route path='/AddUsers' element={<AddUser/>}/>
         <Route path='/VerifiedUsers' element={<VerifiedUsers/>}/>
+        <Route path='/AddEmbassis' element={<AddEmbassis/>}/>
+        <Route path='/EmbassyList' element={<EmbassyList/>}/>
+        <Route path='/AddAppointment' element={<AddAppointment/>}/>
         <Route path='/*' element={<Page404/>}/>
+
         
       </Routes>
       </MDBCol>

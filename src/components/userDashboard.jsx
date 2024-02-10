@@ -22,10 +22,10 @@ export default function UserDashboard(){
     })
     const cards=[
         {
-            name:"Appointments",
+            name:"Add Embassy",
             icon:"/images/calender.jpg",
             click:()=>{
-                navigate("/Appointments")
+                navigate("/AddEmbassis")
             }
         },
         {
@@ -100,8 +100,6 @@ export default function UserDashboard(){
 
 
     </div>
-
-
         <div className='dashboard'>
         <MDBContainer fluid >
               <MDBRow style={{padding:0}}>

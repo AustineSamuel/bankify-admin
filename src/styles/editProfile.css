@@ -8,6 +8,9 @@
     margin-top:10px;
     box-shadow:1px 1px 10px 0px lightgrey;
     padding:26px 16px;
+    max-height:88vh;
+    overflow-x:hidden;
+    overflow-y:overflow;
 }
 
 .profilePicture{
