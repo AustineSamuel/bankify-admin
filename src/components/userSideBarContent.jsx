@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { MDBListGroup, MDBBtn } from 'mdb-react-ui-kit';
-import { Home, List, Bookmark, Camera, UserPlus, MousePointer, PlusSquare } from 'react-feather';
+import { Home, List, Bookmark, Camera, UserPlus, MousePointer, PlusSquare, Power } from 'react-feather';
 import {useNavigate} from 'react-router-dom'
 const sideBarsList = [
   {
@@ -39,7 +39,7 @@ const sideBarsList = [
   },
   {
     name: "Users Bookings",
-    link: "/Payment",
+    link: "/UsersBookings",
     icon: <Bookmark />,
     onClick: () => {
       // Add logic to navigate to the payment page
@@ -68,6 +68,17 @@ const sideBarsList = [
     onClick: () => {
       // Add logic to navigate to the user's appointments page
     }
+  },
+  {
+    name: "Logout",
+    link: undefined,
+    icon: <Power/>,
+    onClick: () => {
+      // Add logic to navigate to the user's appointments page
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.reload();
+    }
   }
   // Add more buttons as needed
 ];
@@ -82,7 +93,10 @@ function UserSideBarContent({closeMenu}) {
     <MDBListGroup className="side-menu">
       {sideBarsList.map((item, index) => (
         <MDBBtn key={index} onClick={()=>{
-          navigate(item.link)
+         if(item.link)navigate(item.link)
+         else{
+        item.onClick();
+        }
           if(closeMenu)closeMenu()
         }}  color='light' rippleColor='dark'>
             <span className="icon">{item.icon}</span>

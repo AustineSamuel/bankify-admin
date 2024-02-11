@@ -63,6 +63,7 @@ export default function UserDashboard(){
             name:"Report bug",
             icon:"/images/message.jpg",
             click:()=>{
+                navigate("/ReportBugs");
                 console.log("clicked edit profile");
             }
         }

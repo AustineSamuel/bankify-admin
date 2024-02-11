@@ -2,6 +2,7 @@ import { MDBBadge, MDBIcon } from 'mdb-react-ui-kit';
 import CustomAvatar from '../utils/customAvatar';
 import {useState} from 'react';
 import {Menu} from 'react-feather';
+import {getCurrentDateTime} from '../Logics/date'
 import {
     MDBModal,
     MDBModalDialog,
@@ -14,10 +15,8 @@ import {
   } from 'mdb-react-ui-kit';
 import Notifications from './notifications';
 
-export default function UserNav({openMenu}) {
+export default function UserNav({openMenu,adminDetails}) {
     const [openNotifications,setOpenNotifications]=useState(false);
-
-    
     return (
         
 <>
@@ -44,8 +43,8 @@ export default function UserNav({openMenu}) {
         <div className='userNav d-flex align-items-center justify-content-between'>
 
             {window.innerWidth > 700  ? <div className='greetingUser text-start'>
-                <b>Austine Dev</b><br />
-                <span>Jan 8 2024</span>
+                <b>{adminDetails?.name}</b><br />
+                <span>{getCurrentDateTime()}</span>
             </div> : <div style={{textAlign:'start',padding:"18px"}}>
                 <Menu onClick={()=>{
                     openMenu()

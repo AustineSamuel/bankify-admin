@@ -1,45 +1,80 @@
 import CustomAvatar from "../../utils/customAvatar";
 import "./style.css";
-import React,{useEffect,useState} from 'react';
+import React,{useState} from 'react';
 import {MDBInput,MDBBtn} from 'mdb-react-ui-kit'
 import {PulseLoader} from 'react-spinners';
+import { docQr } from "../../Logics/docQr";
+import {toast,Toaster} from 'react-hot-toast';
+
 const Login=()=>{
+    /**
+     * password: "@#$5dej930$%34"
+username: "app@admin.com"
+     */
     const [inputs,setInputs]=useState({
         username:"",
         password:""
     })
     const [isLoading,setIsLoading]=useState(false);
-
-    const submit=()=>{
+    const submit=async ()=>{
 setIsLoading(true);
-
-setTimeout(()=>{
-    console.log(inputs);
+const fetchDetails=await docQr("AdminLogin",{
+    max:1,
+    whereClauses:[
+        {
+            field:"password",
+            operator:"==",
+            value:inputs.password
+        },
+        {
+            field:"username",
+            operator:"==",
+            value:inputs.username
+        }
+    ]
+})
+if(fetchDetails.length > 0){
+    toast.success("Login successful");
+    delete fetchDetails.docId;
+    sessionStorage.setItem("adminDetails",JSON.stringify(fetchDetails[0]));
+    
+setTimeout(() => {
+    window.location.reload();
+},500);
+}
+else{
+toast.error("Login details incorrect!");
+}
 setIsLoading(false);
-},3000)
     }
 
     return (
         <div className="loginPage">
+            <Toaster/>
 <div className='form text-center'>
     <br/>
+    <div className="d-flex justify-content-center align-items-center">
 <CustomAvatar src='/images/user.png' size={100}/>
+</div>
+<b style={{textShadow:"1px 1px 1px white"}}>Login to admin</b>
 <br/>
-<MDBInput onChange={(e)=>{
+<br/>
+
+<MDBInput size="large" style={{borderColor:"black"}} onChange={(e)=>{
     setInputs({
         ...inputs,
         username:e.target.value
     })
-}} size="large" label='Username' />
+}} label='Username' />
 <br/>
-<MDBInput onChange={(e)=>{
+<MDBInput size="large" onChange={(e)=>{
     setInputs({
         ...inputs,
         password:e.target.value
     })
-}} size="large" type='password' label='Password' />
+}} type='password' label='Password' />
 <br/>
-<MDBBtn color='primary' onClick={()=>{
+<MDBBtn color='primary' size="lg" onClick={()=>{
     submit();
 }} >
     {isLoading  ? <PulseLoader color="white"/>:"Submit"} </MDBBtn>

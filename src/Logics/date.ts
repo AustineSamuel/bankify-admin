@@ -330,3 +330,15 @@ export const removeChar = (inputString: string, charToRemove: string): string =>
   const regex = new RegExp(charToRemove, 'g');
   return inputString.replace(regex, '');
 };
+
+
+export function getCurrentDateTime() {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const currentDate = new Date();
+  const month = months[currentDate.getMonth()];
+  const day = currentDate.getDate();
+  const year = currentDate.getFullYear();
+  const formattedDateTime = `${month} ${day} ${year}`;
+  return formattedDateTime;
+}

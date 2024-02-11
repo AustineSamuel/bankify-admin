@@ -17,6 +17,8 @@ import VerifiedUsers from './components/VerifiedUsers/VerifiedUsers';
 import AddEmbassis from './components/Appointments/AddEbassis';
 import AddAppointment from './components/Appointments/AddAppointment';
 import EmbassyList from './components/EmbassyList/EmbassyList';
+import UserBookings from './components/pages/usersBookings';
+import ReportBug from './components/reportBugs';
 
 
 function App() {
@@ -34,9 +36,10 @@ setTimeout(()=>{
   setMenuOpen(false);
 },800)
 }
-if(!localStorage.getItem("bankifyUser")){
+if(!sessionStorage.getItem("adminDetails")){
   return <Login/>
 }
+const adminDetails=JSON.parse(sessionStorage.getItem("adminDetails"));
   return (
     <Router>
     <div className="App">
@@ -65,7 +68,7 @@ if(!localStorage.getItem("bankifyUser")){
                 {/* Main content */}
                 <MDBCol md="9" lg="10"style={{padding:0}} className="main-content">
               
-<UserNav openMenu={()=>openMenu()}/>
+<UserNav openMenu={()=>openMenu()} adminDetails={adminDetails}/>
 <div className='userNavPlaceholder'></div>
                
         
@@ -81,6 +84,8 @@ if(!localStorage.getItem("bankifyUser")){
         <Route path='/AddEmbassis' element={<AddEmbassis/>}/>
         <Route path='/EmbassyList' element={<EmbassyList/>}/>
         <Route path='/AddAppointment' element={<AddAppointment/>}/>
+        <Route path='/UsersBookings' element={<UserBookings/>}/>
+        <Route path="/ReportBugs" element={<ReportBug/>}/>
         <Route path='/*' element={<Page404/>}/>
 
         

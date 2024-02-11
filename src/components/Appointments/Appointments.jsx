@@ -46,7 +46,12 @@ getAppointments();
           )
         })}
 
-        
+        {!isLoading && appointments.length===0 && <div className="flexCenter" style={{padding:20}}>
+          <div className='text-center'>
+            <img src='/images/noData.png' alt=""/><br/>
+            <b>No Data Found</b>
+          </div>
+          </div>}
 
 
       </MDBRow>

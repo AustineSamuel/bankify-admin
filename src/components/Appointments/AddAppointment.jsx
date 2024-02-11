@@ -169,8 +169,6 @@ async function getEmbassies(){
   })
   setEmbassies(em);
 }
-
-
 useEffect(()=>{
 getEmbassies();
 },[])
@@ -194,7 +192,6 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
  // console.log(Appointment)
   let Inputs = []; // Initialize as an empty array
   for (let i in appointment) {
-    
     if(Array.isArray(appointment[i])){
       const list= appointment[i];
       if(!list)continue;
