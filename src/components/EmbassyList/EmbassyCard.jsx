@@ -4,7 +4,7 @@ import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBListGroup, MDBListG
 
 const EmbassyCard = ({ embassy }) => {
   return (
-    <MDBCard style={{ maxWidth: '20rem', margin: '1rem' }}>
+    <MDBCard style={{ margin: '1rem' }} className='embassyCard'>
     <MDBCardBody>
       <MDBCardTitle>{embassy.name}</MDBCardTitle>
       <MDBCardText>

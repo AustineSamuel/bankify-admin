@@ -26,12 +26,60 @@ const AddAppointment = () => {
   const [embassies,setEmbassies]=useState([]);
   const [selectedEmbassy,setSelectedEmbassy]=useState([]);
   const appointment = {
-    type: "",
-    status: "Scheduled",
-    notes: "Please arrive 15 minutes before your appointment.",
-    confirmationCode: "ABC123",
-    attendees: ["Alice", "Bob"],
-    requiredDocuments: ["Passport", "Proof of Address"],
+    type:  [
+      "Consultation",
+      "Check-up",
+      "Treatment",
+      "Therapy Session",
+      "Diagnostic Test",
+      "Surgery",
+      "Follow-up Appointment",
+      "Counseling Session",
+      "Physical Examination",
+      "Vaccination",
+      "Screening",
+      "Procedure",
+      "Referral Appointment",
+      "Second Opinion",
+      "Preventive Care",
+      "Medication Review",
+      "Health Education",
+      "Mental Health Evaluation",
+      "Rehabilitation Session",
+      "Dental Appointment",
+      "Eye Examination",
+      "Chiropractic Adjustment",
+      "Acupuncture Session",
+      "Massage Therapy",
+      "Nutritional Counseling",
+      "Fitness Evaluation",
+      "Alternative Medicine Consultation",
+      "Other"
+  ],
+    status: ["Scheduled", "Confirmed", "Cancelled", "Completed"],
+    notes: "",
+    requiredDocuments: [
+    "Passport",
+    "Proof of Address",
+    "Driver's License",
+    "National ID Card",
+    "Birth Certificate",
+    "Social Security Card",
+    "Bank Statements",
+    "Utility Bills",
+    "Employment Letter",
+    "Income Tax Returns",
+    "Insurance Documents",
+    "Visa/Residence Permit",
+    "Travel Itinerary",
+    "Medical Records",
+    "Educational Certificates",
+    "Marriage Certificate",
+    "Divorce Decree",
+    "Power of Attorney",
+    "Legal Affidavit",
+    "Other Legal Documents"
+]
   }
 
   const navigate=useNavigate();
@@ -102,7 +150,7 @@ const submit=async () =>{
   console.log(Appointment);
   try{
     setIsSubmitting(true);
-  const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment});
+  const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:generateUniqueString()});
   console.log(AddOperation);
   toast.success("Appointment saved successfully!");
   navigate("/AppointmentList");
@@ -112,7 +160,6 @@ const submit=async () =>{
     console.log(err);
     toast.error(err.message || "Something went wrong");
   }
-
 }
  // console.log(Appointment)
   let Inputs = []; // Initialize as an empty array
@@ -186,8 +233,6 @@ const submit=async () =>{
     <Toaster/>
       <div className='editProfile'><br/>
       <h4 className='text-center'> <b>Add Appointment</b></h4> <br/>
-
-
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Select Embassy</InputLabel>
         <Select
@@ -199,10 +244,10 @@ const submit=async () =>{
           onChange={(event) => {
             const { value } = event.target;
             console.log(value);
+        console.log(event.target);
+
             setAppointment({ ...Appointment, embassy_id: value || "" });
-        //    setSelectEmbassy()
-        console.log(event.target.getAttribute("name"));
-        
+                    //    setSelectEmbassy()
           }}
         >
           {embassies &&

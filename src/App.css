@@ -103,3 +103,25 @@ animation-duration:800ms;
     }
       }
 
+.embassyListContainer{
+width:100%;
+padding:16px;
+}
+@media screen and (max-width:400px){
+.embassyListContainer .embassyCard{
+max-width:100%;
+}
+}
+
+@media screen and (min-width:800px){
+  .embassyListContainer .embassyCard{
+    max-width:46%;
+  }
+  }
+
+  
+@media screen and (min-width:1200px){
+  .embassyListContainer .embassyCard{
+    max-width:30%;
+  }
+  }

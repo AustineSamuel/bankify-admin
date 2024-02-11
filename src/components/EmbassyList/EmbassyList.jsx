@@ -24,7 +24,7 @@ setEmbassy(embassy);
 getEmbassy();
     },[])
     return <>
-    <div style={{maxHeight:"95vh",overflowX:"hidden",overflowY:"auto",display:"flex",flexFlow:"row wrap"}}>
+    <div style={{maxHeight:"95vh",overflowX:"hidden",overflowY:"auto",display:"flex",flexFlow:"row wrap"}} className='embassyListContainer'>
 {/* //<EmbassyCard/> */}
 {Embassy.map((e)=><EmbassyCard embassy={e}/>)}
     </div>
