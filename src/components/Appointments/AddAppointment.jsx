@@ -180,7 +180,7 @@ const submit=async () =>{
   if(!validateData(Appointment))return
   try{
     setIsSubmitting(true);
-const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:generateUniqueString()});
+const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:"apt_"+Date.now()});
   console.log(AddOperation)
   toast.success("Appointment saved successfully!");
   navigate("/Appointments");

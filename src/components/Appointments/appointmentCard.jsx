@@ -5,21 +5,21 @@ import { Skeleton } from '@mui/material';
 
 
 function Card({ appointment }) {
-    const { id, type, dateTime, status, notes, confirmationCode } = appointment;
+    const { appointmentId, type, dateTime, status, notes } = appointment;
   
     return (
       <MDBCard className="h-100">
         <MDBCardBody>
-          <MDBCardTitle>Appointment ID: {id}</MDBCardTitle>
+          <MDBCardTitle>Appointment ID: {appointmentId}</MDBCardTitle>
           <MDBCardText>Type: {type}</MDBCardText>
           <MDBCardText>Date and Time: {dateTime}</MDBCardText>
           <MDBCardText>Status: {status}</MDBCardText>
           <MDBCardText>Notes: {notes}</MDBCardText>
-          <MDBCardText>Confirmation Code: {confirmationCode}</MDBCardText>
         </MDBCardBody>
       </MDBCard>
     );
-  }
+}
+
 export const CardSkeleton=()=>{
     return (<>
     <Skeleton variant="text" width={200} height={30} />

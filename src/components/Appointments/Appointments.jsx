@@ -8,22 +8,25 @@ import Card, { CardSkeleton } from './appointmentCard';
 export default function Appointments() {
   // Assuming appointments array
   const [isLoading,setIsLoading]=useState(true);
-  const [appointments,setAppointment] = []; // Mock data for demonstration
-useEffect(()=>{
-const getAppointments=async()=>{
-const appointments=await docQr("Appointment",{
-  max:800,
-  whereClauses:[
-    {
-      field:"type",
-      operator:'!=',
-      value:""
+  const [appointments,setAppointment] = useState([]); // Mock data for demonstration
+  const getAppointments=async()=>{
+    const appointments=await docQr("Appointment",{
+      max:800,
+      whereClauses:[
+        {
+          field:"type",
+          operator:'!=',
+          value:""
+        }
+      ]
+    })
+    console.log(appointments);
+    setAppointment(appointments)
+    setIsLoading(false);
     }
-  ]
-})
-setAppointment(appointments)
-setIsLoading(false);
-}
+
+useEffect(()=>{
+
 getAppointments();
 },[])
   return (
