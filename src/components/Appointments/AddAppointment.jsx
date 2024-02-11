@@ -23,54 +23,43 @@ import { generateUniqueString } from '../../Logics/date';
 
 
 const AddAppointment = () => {
-  const embassy = {
-    name: "",
-    country: "",
-    city: "",
-    address: "",
-    contactInformation: {
-      phone: "",
-      email: "",
-      website: ""
-    },
-    operatingHours: {
-      monday: "9:00 AM - 5:00 PM",
-      tuesday: "9:00 AM - 5:00 PM",
-      wednesday: "9:00 AM - 5:00 PM",
-      thursday: "9:00 AM - 5:00 PM",
-      friday: "9:00 AM - 5:00 PM"
-    },
-    servicesOffered: ["Visa Services", "Passport Issuance", "Consular Assistance"],
-    appointmentBookingProcedure: "Appointments can be booked online through our website or by calling our office during business hours.",
-    emergencyContactInformation: {
-      phone: "",
-      email: ""
-    },
-    locationCoordinates: {
-      latitude: 12.3456,
-      longitude: -98.7654
-    }
-  };
+  const [embassies,setEmbassies]=useState([]);
+  const [selectedEmbassy,setSelectedEmbassy]=useState([]);
+  const appointment = {
+    type: "",
+    status: "Scheduled",
+    notes: "Please arrive 15 minutes before your appointment.",
+    confirmationCode: "ABC123",
+    attendees: ["Alice", "Bob"],
+    requiredDocuments: ["Passport", "Proof of Address"],
+  }
 
   const navigate=useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(null);
 
-
-  const [Embassy, setEmbassy] = useState({ ...embassy});
+  const [Appointment, setAppointment] = useState({ ...appointment,reminderSettings: {
+    email: true,
+    sms: false
+  },
+  dateTime: getCurrentTimestamp(),
+  createdAt: getCurrentTimestamp(),
+  updatedAt:  getCurrentTimestamp()
+}
+);
 const handleTextChange=(e,name)=>{
   const {value}=e.target
-  setEmbassy({...Embassy,[name]:value})
+  setAppointment({...Appointment,[name]:value})
 }
-const validateData = (embassy) => {
-  // Validate each field of the embassy object
-  // Iterate over each property of the embassy object
-  for (let key in embassy) {
-    const value = embassy[key];
+const validateData = (appointment) => {
+  // Validate each field of the appointment object
+  // Iterate over each property of the appointment object
+  for (let key in appointment) {
+    const value = appointment[key];
     
     // Check if the value is null, undefined, or has a length less than 3 (for strings)
     if (value === null || value === undefined || (typeof value === 'string' && value.length < 3)) {
       // Display an error message based on the property name
-      toast.error(`Please provide valid ${convertToTitleCase(key)}`);
+      toast.error(`Please provide valid (${convertToTitleCase(key)})`);
       return false;
     }
 
@@ -83,57 +72,54 @@ const validateData = (embassy) => {
     }
   }
 
-
-
-
-  if (!embassy.name || !embassy.country || !embassy.city || !embassy.address) {
-    toast.error('Please provide complete embassy information');
-    return false;
-  }
-
-  if (!embassy.contactInformation || !embassy.contactInformation.phone || !embassy.contactInformation.email) {
-    toast.error('Please provide contact information');
-    return false;
-  }
-
-  if (!embassy.operatingHours) {
-    toast.error('Please provide operating hours');
-    return false;
-  }
-
-  if (!embassy.servicesOffered || embassy.servicesOffered.length === 0) {
-    toast.error('Please provide services offered');
-    return false;
-  }
-
-  if (!embassy.appointmentBookingProcedure) {
-    toast.error('Please provide appointment booking procedure');
-    return false;
-  }
-
-  if (!embassy.emergencyContactInformation || !embassy.emergencyContactInformation.phone || !embassy.emergencyContactInformation.email) {
-    toast.error('Please provide emergency contact information');
-    return false;
-  }
-
-  if (!embassy.locationCoordinates || !embassy.locationCoordinates.latitude || !embassy.locationCoordinates.longitude) {
-    toast.error('Please provide location coordinates');
-    return false;
-  }
-
   // If all fields are valid, return true
   return true;
 };
 
-const submit=async () =>{
-  console.log(Embassy);
+
+async function getEmbassies(){
+  const em= await docQr("Embassy",{
+    max:800,
+    whereClauses:[
+      {
+        field:"servicesOffered",
+        operator:"!=",
+        value:""
+      }
+    ]
+  })
+  setEmbassies(em);
 }
- // console.log(Embassy)
+
+
+useEffect(()=>{
+getEmbassies();
+},[])
+
+
+const submit=async () =>{
+  if(!validateData(Appointment))return
+  console.log(Appointment);
+  try{
+    setIsSubmitting(true);
+  const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment});
+  console.log(AddOperation);
+  toast.success("Appointment saved successfully!");
+  navigate("/AppointmentList");
+  setIsSubmitting(false);
+  }
+  catch(err){
+    console.log(err);
+    toast.error(err.message || "Something went wrong");
+  }
+
+}
+ // console.log(Appointment)
   let Inputs = []; // Initialize as an empty array
-  for (let i in embassy) {
+  for (let i in appointment) {
     
-    if(Array.isArray(embassy[i])){
-      const list= embassy[i];
+    if(Array.isArray(appointment[i])){
+      const list= appointment[i];
       if(!list)continue;
       Inputs.push(
         <>
@@ -144,11 +130,10 @@ const submit=async () =>{
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           label={convertToTitleCase(i)}
-          value={Embassy?.[i] || ""} // Use optional chaining to handle potential undefined values
+          value={Appointment?.[i] || ""} // Use optional chaining to handle potential undefined values
           onChange={(event) => {
             const { value } = event.target;
-            console.log(i, value);
-            setEmbassy({ ...Embassy, [i]: value || "" });
+            setAppointment({ ...Appointment, [i]: value || "" });
           }}
         >
           {list &&
@@ -163,20 +148,16 @@ const submit=async () =>{
       </>
       );
     }
-   if(typeof embassy[i]=='object' && !Array.isArray(embassy[i])){
-    const newInputs=embassy?.[i];
+   if(typeof appointment[i]=='object' && !Array.isArray(appointment[i])){
+    const newInputs=Appointment?.[i];
     const inputsList=[];
-    const handleTextChange=(e,newIndex)=>{
-setEmbassy({...Embassy,[i]:e})
-    }
-
     for(let prop in newInputs){
       inputsList.push(<>
         <MDBInput label={convertToTitleCase(prop)} name={i} placeholder={`Enter ${convertToTitleCase(prop)}`} type={
           i==='dateOfBirth' ? 'date':i==='password' ? 'password':"text"} value={newInputs[prop]}
          onChange={(e)=>{
-          const newValue={...Embassy?.[i],[prop]:e.target.value}
-          handleTextChange(newValue);
+          const newValue={...Appointment?.[i],[prop]:e.target.value}
+          setAppointment({...Appointment,[i]:newValue});
         }}/>
         <br />
       </>)
@@ -187,10 +168,10 @@ setEmbassy({...Embassy,[i]:e})
     {inputsList}
     </>)
     }
-    if(typeof embassy?.[i]=='string'){
+    if(typeof appointment?.[i]=='string'){
           Inputs.push(
       <>
-        <MDBInput label={convertToTitleCase(i)} value={Embassy?.[i]} name={i} placeholder={`Enter ${convertToTitleCase(i)}`} type={
+        <MDBInput label={convertToTitleCase(i)} value={Appointment?.[i]} name={i} placeholder={`Enter ${convertToTitleCase(i)}`} type={
           i==='dateOfBirth' ? 'date':i==='password' ? 'password':"text"
         }  onChange={(e)=>handleTextChange(e,i)}/>
         <br />
@@ -204,7 +185,36 @@ setEmbassy({...Embassy,[i]:e})
     <>
     <Toaster/>
       <div className='editProfile'><br/>
-      <h4 className='text-center'> <b>Add Appointment Embassy</b></h4> <br/>
+      <h4 className='text-center'> <b>Add Appointment</b></h4> <br/>
+
+
+      <FormControl fullWidth size="small">
+        <InputLabel id="demo-simple-select-label">Select Embassy</InputLabel>
+        <Select
+          size="small"
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label={'Select Embassy'}
+          value={selectedEmbassy?.name} // Use optional chaining to handle potential undefined values
+          onChange={(event) => {
+            const { value } = event.target;
+            console.log(value);
+            setAppointment({ ...Appointment, embassy_id: value || "" });
+        //    setSelectEmbassy()
+        console.log(event.target.getAttribute("name"));
+        
+          }}
+        >
+          {embassies &&
+          embassies.map((embassy,index) => (
+              <MenuItem name={embassy.name} value={embassy?.embassy_id || ""} key={index}>
+                {embassy.name+" ("+embassy.city+" "+embassy.country+")"}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+     <br/><br/>
+
         {Inputs}
 <br/>
 <MDBBtn style={{width:"100%"}} onClick={
