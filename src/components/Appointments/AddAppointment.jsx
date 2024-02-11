@@ -84,6 +84,31 @@ const AddAppointment = () => {
 
   const navigate=useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(null);
+const [form,setForm]=useState([]);
+const [currentForm,setCurrentForm]=useState({
+  type:"",
+  name:""
+});
+
+const addInput = () => {
+  setForm([...form, { type: currentForm.type, name: currentForm.name, placeholder: 'Enter '+currentForm.name, value: '' }]);
+setCurrentForm({
+name:"",
+type:""
+})
+};
+
+const removeInput = (index) => {
+  const updatedForm = [...form];
+  updatedForm.splice(index, 1);
+  setForm(updatedForm);
+};
+const handleFormInputChange = (index, event) => {
+  const { name, value } = event.target;
+  const updatedForm = [...form];
+  updatedForm[index] = { ...updatedForm[index], [name]: value };
+  setForm(updatedForm);
+};
 
   const [Appointment, setAppointment] = useState({ ...appointment,reminderSettings: {
     email: true,
@@ -91,7 +116,10 @@ const AddAppointment = () => {
   },
   dateTime: getCurrentTimestamp(),
   createdAt: getCurrentTimestamp(),
-  updatedAt:  getCurrentTimestamp()
+  updatedAt:  getCurrentTimestamp(),
+  type:"",
+  requiredDocuments:"",
+  status:""
 }
 );
 const handleTextChange=(e,name)=>{
@@ -124,6 +152,9 @@ const validateData = (appointment) => {
   return true;
 };
 
+useEffect(()=>{
+
+},[currentForm]);
 
 async function getEmbassies(){
   const em= await docQr("Embassy",{
@@ -147,13 +178,12 @@ getEmbassies();
 
 const submit=async () =>{
   if(!validateData(Appointment))return
-  console.log(Appointment);
   try{
     setIsSubmitting(true);
-  const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:generateUniqueString()});
-  console.log(AddOperation);
+const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:generateUniqueString()});
+  console.log(AddOperation)
   toast.success("Appointment saved successfully!");
-  navigate("/AppointmentList");
+  navigate("/Appointments");
   setIsSubmitting(false);
   }
   catch(err){
@@ -262,7 +292,73 @@ const submit=async () =>{
 
         {Inputs}
 <br/>
-<MDBBtn style={{width:"100%"}} onClick={
+<h4 style={{fontWeight:"bolder"}}>Add form</h4>
+
+<div className='addForm'>
+  <br/>
+  <FormControl fullWidth size="small">
+        <InputLabel id="demo-simple-select-label">Select input type</InputLabel>
+        <Select
+          size="small"
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label={'Select input type'}
+          value={currentForm.type} // Use optional chaining to handle potential undefined values
+          onChange={(event) => {
+            const { value } = event.target;
+            setCurrentForm({ ...currentForm, type: value || "text" });
+          }}
+        >
+          
+        {["text","number","email","tel:"].map((type,index) => (
+              <MenuItem name={type} value={type} key={index}>
+                {type}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+<br/><br/>
+<MDBInput label='Enter  input' placeholder="name" value={currentForm.name} onChange={(e)=>{
+            setCurrentForm({ ...currentForm, name:e.target.value});
+}}/>
+
+  <br/>
+  <MDBBtn size="lg" style={{margin:"0 auto",borderRadius:"30px"}} onClick={()=>{
+    if(currentForm.name===""){
+      return toast.error("Please enter input name")
+
+    }
+    if(currentForm.type===""){
+      return toast.error("Please select input type")
+    }
+    addInput();
+  }}>Add</MDBBtn>
+</div>
+<br/>
+
+<div className='addForm'>
+  <br/>
+  {form.length===0 && <>
+  <div className='text-center'>
+<small>No Form Added</small>
+  </div>
+  </>}
+  {form.map((input, index) => (<>
+                <div key={index} className='d-flex'style={{gap:5}}>
+                    <MDBInput
+                        type={input.type}
+                        name={`input-${index}`}
+                        label={input.name}
+                        value={input.value}
+                        onChange={(e) => handleFormInputChange(index, e)}
+                    />
+                    <MDBBtn onClick={() => removeInput(index)} style={{fontSize:"smaller"}}>Remove</MDBBtn>
+                </div><br/></>
+            ))}  
+</div>
+
+<br/>
+<MDBBtn size="lg" style={{width:"100%",borderRadius:30}} onClick={
   ()=>submit()
 }>{isSubmitting ? <PulseLoader color='white'/>:"Submit"}</MDBBtn>
       </div>
