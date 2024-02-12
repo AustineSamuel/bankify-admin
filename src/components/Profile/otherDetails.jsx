@@ -19,7 +19,7 @@ export default function OtherCard({ user }) {
     return (
     <div className='userCard d-flex align-items-start'>
       <div style={{ height: "100%" }} className='userCardDetails'>
-      <p>Gender: {user.personalInformation.gender}</p>
+      <p>Gender: {user.gender}</p>
 
         <p>Verification Status: {user.verificationStatus}</p>
         <p>Timestamp: {user.timestamp}</p>

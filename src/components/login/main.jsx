@@ -7,10 +7,6 @@ import { docQr } from "../../Logics/docQr";
 import {toast,Toaster} from 'react-hot-toast';
 
 const Login=()=>{
-    /**
-     * password: "@#$5dej930$%34"
-username: "app@admin.com"
-     */
     const [inputs,setInputs]=useState({
         username:"",
         password:""

@@ -40,7 +40,7 @@ const Profile = () => {
 
           {user ?  <MDBCol md="5" lg="4" style={{ padding: 0 }}>
               <UserCard user={user} />
-            </MDBCol>:<BounceLoader/>}
+            </MDBCol>:<BounceLoader color='var(--color)'/>}
 
 
             <MDBCol md="6" lg="8" className='otherCard'>
