@@ -22,7 +22,7 @@ function Card({ appointment }) {
 
 export const CardSkeleton=()=>{
     return (<>
-    <Skeleton variant="text" width={200} height={30} />
+    <Skeletont variant="text" width={200} height={30} />
     <Skeleton variant="text" width={150} height={20} />
     <Skeleton variant="text" width={200} height={20} />
     <Skeleton variant="text" width={150} height={20} />

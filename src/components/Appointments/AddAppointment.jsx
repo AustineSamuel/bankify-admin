@@ -178,7 +178,7 @@ const submit=async () =>{
   if(!validateData(Appointment))return
   try{
     setIsSubmitting(true);
-const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:"apt_"+Date.now()});
+const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:"apt_"+Date.now(),forms:form});
   console.log(AddOperation)
   toast.success("Appointment saved successfully!");
   navigate("/Appointments");
