@@ -101,6 +101,12 @@ const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
       </div>
       <MDBBadge color={color} className='pcOnly'>{user.status}</MDBBadge>
       <div className='pcOnly'>
+        
+      <MDBBtn className="me-2 btn-sm" color="light" onClick={() => {
+          window.sessionStorage.setItem("editUser",JSON.stringify(user));
+          navigate("/EditProfile");
+        }}>Edit User </MDBBtn>
+
         <MDBBtn className="me-2 btn-sm" color="warning" onClick={() => {
           setIsSuspending(true);
           onSuspend(user);
@@ -117,6 +123,9 @@ const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
           onDelete(user)
           deleteUser(user);
         }}>{isDeleting ? <ClipLoader color='white' size={16} /> : "Delete"} </MDBBtn>
+
+
+
         <MDBBtn className="btn-sm" color="primary" onClick={() => {
           onShowProfile(user)
           sessionStorage.setItem("uid",user.uid)
@@ -146,6 +155,13 @@ const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
               deleteUser(user);
 
             }}>Delete</MDBDropdownItem>
+            
+            <MDBDropdownItem link onClick={() =>{
+              onShowProfile(user)
+              sessionStorage.setItem("uid",user.uid)
+               navigate("/Profile")
+             } 
+            }>Edit</MDBDropdownItem>
             <MDBDropdownItem link onClick={() =>{
               onShowProfile(user)
               sessionStorage.setItem("uid",user.uid)

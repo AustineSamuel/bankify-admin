@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const Months = [
     "January",
     "February",
@@ -158,9 +160,9 @@ export function calculateSMSCharges(message:string,charactersPerPage:number=70){
 }
 
 export function getTimeAgoString(dateString: string): string {
-  const now =Date.now()// moment();
-  const targetDate =0// moment(dateString);
-  const diffInSeconds =0// now.diff(targetDate, 'seconds');
+  const now = moment();
+  const targetDate = moment(dateString);
+  const diffInSeconds = now.diff(targetDate, 'seconds');
 
   if (diffInSeconds < 60) {
     return `${diffInSeconds}s ago`;

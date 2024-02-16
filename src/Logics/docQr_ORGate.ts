@@ -22,8 +22,8 @@ export const docQr = async (collectionName: string, options?: QueryOptions) => {
 
       querySnapshot.forEach((doc) => {
         data.push({
-          docId: doc.id,
           ...doc.data(),
+          docId: doc.id,
         });
       });
     });

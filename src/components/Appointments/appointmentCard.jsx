@@ -15,7 +15,7 @@ function Card({ appointment }) {
           <MDBCardText>Date and Time: {dateTime}</MDBCardText>
           <MDBCardText>Status: {status}</MDBCardText>
           <MDBCardText>Notes: {notes}</MDBCardText>
-        </MDBCardBody>
+      </MDBCardBody>
       </MDBCard>
     );
 }

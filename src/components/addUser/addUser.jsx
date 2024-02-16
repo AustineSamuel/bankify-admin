@@ -18,7 +18,7 @@ import {db} from '../../firebase.config'
 import { getCurrentTimestamp } from '../../Logics/DateFunc';
 import { docQr } from '../../Logics/docQr_ORGate';
 import { generateUniqueString } from '../../Logics/date';
-
+import {convertCamelCaseToSpaced} from '../../Logics/DateFunc'
 
 
 const AddUser = () => {
@@ -142,7 +142,7 @@ catch(err){
       Inputs.push(
         <>
         <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">{i}</InputLabel>
+        <InputLabel id="demo-simple-select-label">{convertCamelCaseToSpaced(i)}</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
@@ -170,7 +170,7 @@ catch(err){
     else{
           Inputs.push(
       <>
-        <MDBInput label={i} name={i} placeholder={`Enter ${i}`} type={
+        <MDBInput label={convertCamelCaseToSpaced(i)} name={i} placeholder={`Enter ${convertCamelCaseToSpaced(i)}`} type={
           i==='dateOfBirth' ? 'date':i==='password' ? 'password':"text"
         }  onChange={(e)=>handleTextChange(e,i)}/>
         <br />
@@ -181,7 +181,7 @@ catch(err){
   }
 //},[]);
 
-  <MDBInput className='' />
+  // <MDBInput className='' />
   return (
     <>
     <Toaster/>
