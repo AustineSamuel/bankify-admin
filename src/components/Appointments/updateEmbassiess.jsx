@@ -19,10 +19,19 @@ import {db} from '../../firebase.config'
 import { convertToTitleCase, getCurrentTimestamp } from '../../Logics/DateFunc';
 import { docQr } from '../../Logics/docQr_ORGate';
 import { generateUniqueString } from '../../Logics/date';
+import { updateData } from '../../Logics/updateData';
 
 
 
-const AddEmbassy = () => {
+const UpdateEmbassy = () => {
+  const editEmbassyString=sessionStorage.getItem("EditEmbassy");
+  if(!editEmbassyString)window.location.href='/EmbassyList';
+  const EditEmbassy=JSON.parse(editEmbassyString);
+  const docId=EditEmbassy?.docId;
+  let embassy_id=EditEmbassy?.embassy_id
+  delete EditEmbassy?.docId ;
+  delete EditEmbassy?.embassy_id ;
+
   const embassy = {
     name: "",
     country: "",
@@ -49,14 +58,15 @@ const AddEmbassy = () => {
     locationCoordinates: {
       latitude: 12.3456,
       longitude: -98.7654
-    }
+    },
+    ...EditEmbassy
   }
 
   const navigate=useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(null);
 
 
-  const [Embassy, setEmbassy] = useState({ ...embassy,embassy_id:"embassy_"+Date.now()+''+generateUniqueString()});
+  const [Embassy, setEmbassy] = useState({ ...embassy});
 const handleTextChange=(e,name)=>{
   const {value}=e.target
   setEmbassy({...Embassy,[name]:value})
@@ -92,9 +102,9 @@ const submit=async () =>{
   console.log(Embassy);
   try{
     setIsSubmitting(true);
-  const AddOperation=await AddData(collection(db,"Embassy"),{...Embassy});
+  const AddOperation=await updateData("Embassy",docId,{...Embassy,embassy_id:embassy_id});
   console.log(AddOperation);
-  toast.success("Embassy saved successfully!");
+  toast.success("Embassy updated successfully!");
   navigate("/EmbassyList");
   setIsSubmitting(false);
   }
@@ -175,15 +185,15 @@ const submit=async () =>{
     <>
     <Toaster/>
       <div className='editProfile'><br/>
-      <h4 className='text-center'> <b>Add Appointment Embassy</b></h4> <br/>
+      <h4 className='text-center'> <b>Update Appointments Embassy</b></h4> <br/>
         {Inputs}
 <br/>
 <MDBBtn style={{width:"100%"}} onClick={
   ()=>submit()
-}>{isSubmitting ? <PulseLoader color='white'/>:"Submit"}</MDBBtn>
+}>{isSubmitting ? <><PulseLoader color='white'/>Updating...</>:"Update"}</MDBBtn>
       </div>
     </>
   );
 }
 
-export default AddEmbassy;
+export default UpdateEmbassy;

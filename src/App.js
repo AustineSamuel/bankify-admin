@@ -21,6 +21,7 @@ import UserBookings from './components/pages/usersBookings';
 import ReportBug from './components/reportBugs';
 import EditProfile from './components/editProfile';
 import EditAppointment from './components/Appointments/EditAppoinment';
+import UpdateEmbassy from './components/Appointments/updateEmbassiess';
 
 
 function App() {
@@ -85,6 +86,8 @@ const adminDetails=JSON.parse(sessionStorage.getItem("adminDetails"));
         <Route path='/VerifiedUsers' element={<VerifiedUsers/>}/>
         <Route path='/AddEmbassis' element={<AddEmbassis/>}/>
         <Route path='/EmbassyList' element={<EmbassyList/>}/>
+        <Route path='/EditEmbassy' element={<UpdateEmbassy/>}/>
+
         <Route path='/EditProfile' element={<EditProfile/>}/>
 
 <Route path='/EditAppointment' element={<EditAppointment/>}/>

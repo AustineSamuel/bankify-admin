@@ -1,8 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 //import moment from 'moment'; // Import moment for date rendering
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBListGroup, MDBListGroupItem } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBListGroup, MDBListGroupItem,MDBBtn } from 'mdb-react-ui-kit';
+import { deleteData } from '../../Logics/deleteData';
+import {toast} from 'react-hot-toast';
+import {useNavigate} from 'react-router-dom';
+import { Edit2, Trash2 } from 'react-feather';
+import {BounceLoader} from 'react-spinners';
+const EmbassyCard = ({ embassy,deleteCallback }) => {
 
-const EmbassyCard = ({ embassy }) => {
+const {docId}=embassy
+  const [isDeleting,setIsDeleting]=useState(false);
+  const navigate=useNavigate()
+    useEffect(()=>{
+  
+    },[isDeleting]);
+
+
+  const deleteItem=async ()=>{
+    setIsDeleting(true);
+await deleteData("Embassy",docId);
+toast.success("Delete successful");
+deleteCallback()
+  }
+
+  const Edit=()=>{
+    sessionStorage.setItem("EditEmbassy",JSON.stringify(embassy));
+  navigate("/EditEmbassy");
+  }
+  
+
+
+
+
   return (
     <MDBCard style={{ margin: '1rem' }} className='embassyCard'>
     <MDBCardBody>
@@ -38,6 +67,18 @@ const EmbassyCard = ({ embassy }) => {
           <MDBListGroupItem>Email: {embassy.emergencyContactInformation.email}</MDBListGroupItem>
         </MDBListGroup>
         <strong>Location Coordinates:</strong> Latitude: {embassy.locationCoordinates.latitude}, Longitude: {embassy.locationCoordinates.longitude}
+    
+
+
+        <div className='d-flex align-items-center' style={{width:"100%"}}>
+<MDBBtn onClick={()=>deleteItem()} color='dark' rounded>
+  {isDeleting ? <BounceLoader size={18} color='white'/>: <><Trash2/> Delete</>}</MDBBtn>
+
+<MDBBtn color='light' rounded onClick={()=>Edit()}><Edit2/> Edit</MDBBtn>
+
+          </div>
+
+
       </MDBCardText>
     </MDBCardBody>
   </MDBCard>

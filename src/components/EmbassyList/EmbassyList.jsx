@@ -7,23 +7,26 @@ const EmbassyList=()=>{
     const [isLoading,setIsLoading]=useState(true);
     const [Embassy,setEmbassy]=useState([]);
 
+    const getEmbassy=async ()=>{
+        setIsLoading(true)
+    const embassy=await docQr("Embassy",{
+        max:800,
+        whereClauses:[
+            {
+                field:"name",
+                operator:"!=",
+                value:""
+            }
+        ]
+    })
+    console.log(embassy);
+    setIsLoading(false);
+    setEmbassy(embassy);
+    }
+
+
     useEffect(()=>{
-const getEmbassy=async ()=>{
-    setIsLoading(true)
-const embassy=await docQr("Embassy",{
-    max:800,
-    whereClauses:[
-        {
-            field:"name",
-            operator:"!=",
-            value:""
-        }
-    ]
-})
-console.log(embassy);
-setIsLoading(false);
-setEmbassy(embassy);
-}
+
 getEmbassy();
     },[])
     return <>
@@ -31,7 +34,7 @@ getEmbassy();
 {/* //<EmbassyCard/> */}
 {isLoading ?[1,2,3].map(()=>(
 <EmbassyCardSkeleton/>
-)):Embassy.map((e)=><EmbassyCard embassy={e}/>)}
+)):Embassy.map((e)=><EmbassyCard deleteCallback={getEmbassy} embassy={e}/>)}
 {!isLoading && Embassy.length===0 && <div className="flexCenter" style={{padding:20}}>
           <div className='text-center'>
             <img src='/images/noData.png' alt=""/><br/>
