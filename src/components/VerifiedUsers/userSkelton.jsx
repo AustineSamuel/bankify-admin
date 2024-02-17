@@ -27,7 +27,7 @@ const UserItemSkeleton = () => {
         <Skeleton width={60} height={24} />
         <Skeleton width={60} height={24} />
               </div>
-      <div className='mobileOnly'>
+      <div className='mobileOnly' hidden>
         <MDBDropdown>
           <MDBDropdownToggle style={{ borderRadius: 30 }} c>
             <Skeleton width={100} height={20} />

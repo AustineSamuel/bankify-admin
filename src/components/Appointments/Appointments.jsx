@@ -4,7 +4,7 @@ import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import './style.css';
 import { docQr } from '../../Logics/docQr';
 import Card, { CardSkeleton } from './appointmentCard';
-
+import {Toaster} from 'react-hot-toast';
 export default function Appointments() {
   // Assuming appointments array
   const [isLoading,setIsLoading]=useState(true);
@@ -30,11 +30,13 @@ useEffect(()=>{
 getAppointments();
 },[])
   return (
+    <>
+    <Toaster/>
     <MDBContainer className="appointments">
       <MDBRow className="d-flex flex-wrap">
         {!isLoading ? appointments.map((appointment, index) => (
           <MDBCol key={index} xs={12} md={6} lg={4} className="mb-4">
-            <Card appointment={appointment} />
+            <Card appointment={appointment} deleteCallback={getAppointments} />
           </MDBCol>
         )):[1,2,3,4,5,6].map((_,index)=>{
           return (
@@ -56,5 +58,6 @@ getAppointments();
 
       </MDBRow>
     </MDBContainer>
+    </>
   );
 }

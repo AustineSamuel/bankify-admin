@@ -49,7 +49,7 @@ export default function UserNav({openMenu,adminDetails}) {
                 <Menu onClick={()=>{
                     openMenu()
                 }}/>
-{/* <img src='/logo.avif' width={50} height={50} alt='bankify logo'/><b>Bankify</b> */}
+{/* <img src='/logo.jpg' width={50} height={50} alt='Immintegral logo'/><b>Immintegral</b> */}
 </div>}
 
             <div className='d-flex align-items-center'>

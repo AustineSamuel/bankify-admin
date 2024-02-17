@@ -88,7 +88,7 @@ function UserSideBarContent({closeMenu}) {
   return (
     <div>
       <div style={{textAlign:'start'}}>
-<img src='/logo.avif' width={50} height={50} alt='bankify logo'/><b>Bankify</b>
+<img src='/logo.jpg' width={50} height={50} alt='Immintegral logo'/><b>Immintegral</b>
 </div>
     <MDBListGroup className="side-menu">
       {sideBarsList.map((item, index) => (

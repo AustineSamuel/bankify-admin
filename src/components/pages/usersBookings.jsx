@@ -154,6 +154,7 @@ function Card({ appointment,callBack ,onShowEmbassy}) {
 let statusColor="";
 switch (status) {
   case 'approve':
+  case 'approved':
     statusColor='success';
     break;
     case 'confirmed':

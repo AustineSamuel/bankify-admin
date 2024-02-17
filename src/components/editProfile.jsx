@@ -15,7 +15,7 @@ import Select from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
 import { collection } from 'firebase/firestore';
 import { db } from '../firebase.config'
-import { getCurrentTimestamp, validateData } from '../Logics/DateFunc';
+import { getCurrentTimestamp, validateData,convertCamelCaseToSpaced } from '../Logics/DateFunc';
 import { docQr } from '../Logics/docQr_ORGate';
 import { generateUniqueString } from '../Logics/date';
 import useUserDetails from '../Hooks/userUserDetails';
@@ -37,8 +37,12 @@ const EditProfile = () => {
   delete user.uid
   delete user.permission
   delete user.profilePicture
+  delete user.status
+  delete user.verified
 
-  const [newUserDetails, setNewUserDetails] = useState({ ...user, gender: ["Male", "Female"] });
+let userProp={...user};
+delete userProp.biometricData;
+  const [newUserDetails, setNewUserDetails] = useState({ ...userProp, gender: ["Male", "Female"] });
   const [isUploading, setIsUploading] = useState(false);
   const handleImageChange = async (e) => {
     setIsUploading(true)
@@ -98,8 +102,8 @@ else{
         23 hours ago
  */
         const addActivities = await AddData(collection(db, "Activities"), {
-          title: "Profile Update Successful",
-          text: "Changes to profile information have been successfully added.",
+          title:userCopy.username+" profile was updated",
+          text: "Profile was updated by admin successfully.",
           added_at: getCurrentTimestamp(),
           username:userCopy?.username,
           userId:userCopy.uid
@@ -127,12 +131,12 @@ else{
       Inputs.push(
         <>
           <FormControl fullWidth size="small">
-            <InputLabel id="demo-simple-select-label">{i}</InputLabel>
+            <InputLabel id="demo-simple-select-label">{convertCamelCaseToSpaced(i)}</InputLabel>
             <Select
               size="small"
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              label={i}
+              label={convertCamelCaseToSpaced(i)}
               defaultValue={user[i]}
               value={newUserDetails?.[i] || ""} // Use optional chaining to handle potential undefined values
               onChange={(event) => {
@@ -156,7 +160,7 @@ else{
     else {
       Inputs.push(
         <>
-          <MDBInput label={i} name={i} placeholder={`Enter ${i}`} type={
+          <MDBInput label={convertCamelCaseToSpaced(i)} name={i} placeholder={`Enter ${convertCamelCaseToSpaced(i)}`} type={
             i === 'dateOfBirth' ? 'date' : i === 'password' ? 'password' : "text"}
             defaultValue={user[i]}
             onChange={(e) => handleTextChange(e, i)} />

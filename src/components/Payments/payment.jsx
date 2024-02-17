@@ -106,7 +106,7 @@ setOpenAlert(true);
   <br/>
   <h5 style={{ textAlign: 'center', marginTop: '10px' }}>Card Declined</h5>
   <p style={{ textAlign: 'center', marginTop: '10px' }}>Your card payment was declined.
-   Please check your card details or contact <a href='mailto:surpport@bankify.com'>surpport@bankify.com</a> for quick support.</p>
+   Please check your card details or contact <a href='mailto:surpport@Immintegral.com'>surpport@Immintegral.com</a> for quick support.</p>
    </div>
 
 </MDBModalBody>
