@@ -50,7 +50,7 @@ setIsLoading(false);
 <div className='form text-center'>
     <br/>
     <div className="d-flex justify-content-center align-items-center">
-<CustomAvatar src='/images/user.png' size={100}/>
+<CustomAvatar src='/logo.jpg' size={100}/>
 </div>
 <b style={{textShadow:"1px 1px 1px white"}}>Login to admin</b>
 <br/>
