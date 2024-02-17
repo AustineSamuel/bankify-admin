@@ -37,7 +37,7 @@ export default function UserDashboard(){
             }
         },
         {
-            name:"Verified Users",
+            name:"Active Users",
             icon:"/images/verify.jpg",
             click:()=>{
                 console.log("clicked Verification");
