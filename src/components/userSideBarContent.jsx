@@ -46,7 +46,7 @@ const sideBarsList = [
     }
   },
   {
-    name: "Active Users",
+    name: "Users",
     link: "/VerifiedUsers",
     icon: <Camera />,
     onClick: () => {
