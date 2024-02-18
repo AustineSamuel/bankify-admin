@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function OtherCard({ user }) {
- 
+ console.info(user);
  /**
   * personalInformation: {
       fullName: "John Doe",
@@ -21,11 +21,11 @@ export default function OtherCard({ user }) {
       <div style={{ height: "100%" }} className='userCardDetails'>
       <p>Gender: {user.gender}</p>
 
-        <p>Verification Status: {user.verificationStatus}</p>
-        <p>Timestamp: {user.timestamp}</p>
-        <p>Additional Information: {user.additionalInformation}</p>
-        <p>Facial Features: {user.biometricData.facialFeatures}</p>
-        <p>Fingerprints: {user.biometricData.fingerprints}</p>
+        <p>Verification Status: {user.verified ? "verified":"unverified"}</p>
+        <p>Contact Number: {user?.contactNumber}</p>
+        <p>Language Proficiency: {user?.LanguageProficiency}</p>
+        <p>Nationality: {user?.Nationality}</p>
+        <p>Marital status: {user.maritalStatus}</p>
       </div>
     </div>
   );

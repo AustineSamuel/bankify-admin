@@ -42,7 +42,11 @@ const EditProfile = () => {
 
 let userProp={...user};
 delete userProp.biometricData;
-  const [newUserDetails, setNewUserDetails] = useState({ ...userProp, gender: ["Male", "Female"] });
+  const [newUserDetails, setNewUserDetails] = useState({...userProp, 
+  gender: ["Male", "Female"],
+  maritalStatus: ['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership']
+ });
+
   const [isUploading, setIsUploading] = useState(false);
   const handleImageChange = async (e) => {
     setIsUploading(true)
@@ -122,6 +126,14 @@ else{
   // console.log(newUserDetails)
   let Inputs = []; // Initialize as an empty array
   //useEffect(()=>{
+  user.maritalStatus=['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership']
+    user.LanguageProficiency="";
+    user.NextOfKing=""
+    user.IdNumber=""
+    user.Nationality=""
+    user.maritalStatus=['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership'];
+    user.LanguageProficiency=''
+   
   for (let i in user) {
     if (typeof user[i] == 'object' && !Array.isArray(user[i])) continue;
 
@@ -137,11 +149,11 @@ else{
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label={convertCamelCaseToSpaced(i)}
-              defaultValue={user[i]}
+              defaultValue={editUser?.[i]}
               value={newUserDetails?.[i] || ""} // Use optional chaining to handle potential undefined values
               onChange={(event) => {
                 const { value } = event.target;
-                console.log(i, value);
+              //  console.log(i, value);
                 setNewUserDetails({ ...newUserDetails, [i]: value || "" });
               }}
             >
@@ -165,7 +177,6 @@ else{
             defaultValue={user[i]}
             onChange={(e) => handleTextChange(e, i)} />
           <br />
-
         </>
       );
     }

@@ -20,18 +20,21 @@ import { docQr } from '../../Logics/docQr_ORGate';
 import { generateUniqueString } from '../../Logics/date';
 import {convertCamelCaseToSpaced} from '../../Logics/DateFunc'
 
-
 const AddUser = () => {
-
   const user = {
     username: "",
     password: "",
     email: "",
     fullName: "",
+    NextOfKing: "",
     dateOfBirth: "",
     gender: ["Male","Female"],
     address: "",
+    IdNumber:"",
+    Nationality: "",
+    maritalStatus: ['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership'],
     status:['active','suspended'],
+    LanguageProficiency:'',
     contactNumber: "",
     biometricData: {
       facialFeatures: "",
@@ -132,6 +135,7 @@ catch(err){
 }
  // console.log(newUserDetails)
   let Inputs = []; // Initialize as an empty array
+
 //useEffect(()=>{
   for (let i in user) {
     if(typeof user[i]=='object' && !Array.isArray(user[i]))continue;

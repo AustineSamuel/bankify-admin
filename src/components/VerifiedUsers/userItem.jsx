@@ -7,7 +7,7 @@ import { updateData } from '../../Logics/updateData'
 import { ClipLoader } from 'react-spinners'
 import { toast } from 'react-hot-toast';
 import { deleteData } from '../../Logics/deleteData';
-
+import FadeInShade from '../../components/animations/fadeIn'
 const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
   let color = "success";
   const [isDeleting, setIsDeleting] = useState(false)
@@ -86,6 +86,7 @@ const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
   }
   const navigate = useNavigate();
   return (
+    <FadeInShade>
     <MDBListGroupItem className="d-flex align-items-center justify-content-between">
       <div className="d-flex align-items-center">
         <div onClick={() => {
@@ -95,7 +96,7 @@ const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
           //navigate("/Profile");
         }}>
           <h5 className="mb-1">{user.username}</h5>
-          <p className="mb-0">Permissions: {user.permissions}</p>
+          <p className="mb-0">{user?.verified ? "verified":"unverified"}</p>
           <MDBBadge color={color} className='mobileOnly'>{user.status}</MDBBadge>
         </div>
       </div>
@@ -173,6 +174,7 @@ const UserItem = ({ user, onSuspend, onDelete, onShowProfile,getUsers }) => {
       </div>
 
     </MDBListGroupItem>
+    </FadeInShade>
   );
 };
 
