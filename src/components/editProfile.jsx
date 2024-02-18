@@ -126,13 +126,13 @@ else{
   // console.log(newUserDetails)
   let Inputs = []; // Initialize as an empty array
   //useEffect(()=>{
-  user.maritalStatus=['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership']
-    user.LanguageProficiency="";
-    user.NextOfKing=""
-    user.IdNumber=""
-    user.Nationality=""
-    user.maritalStatus=['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership'];
-    user.LanguageProficiency=''
+  // user.maritalStatus=['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership']
+  //   user.LanguageProficiency="";
+  //   user.NextOfKing=""
+  //   user.IdNumber=""
+  //   user.Nationality=""
+  //   user.maritalStatus=['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership'];
+  //   user.LanguageProficiency=''
    
   for (let i in user) {
     if (typeof user[i] == 'object' && !Array.isArray(user[i])) continue;
