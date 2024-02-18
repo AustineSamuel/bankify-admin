@@ -39,7 +39,6 @@ export default function UserNav({openMenu,adminDetails}) {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-
         <div className='userNav d-flex align-items-center justify-content-between'>
 
             {window.innerWidth > 700  ? <div className='greetingUser text-start'>
