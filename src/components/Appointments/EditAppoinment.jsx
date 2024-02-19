@@ -205,7 +205,6 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
         <>
         <div><label>{convertToTitleCase(i)}</label>
         <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">{convertToTitleCase(i)}</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
@@ -225,7 +224,7 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
         </Select>
       </FormControl>
       </div>
-      <br/><br/>
+      <br/>
       </>
       );
     }

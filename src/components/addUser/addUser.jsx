@@ -145,13 +145,15 @@ catch(err){
       if(!list)continue;
       Inputs.push(
         <>
+        <div>
+        <label>{convertCamelCaseToSpaced(i)}</label>
+
         <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">{convertCamelCaseToSpaced(i)}</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          label={i}
+        
           value={newUserDetails?.[i] || ""} // Use optional chaining to handle potential undefined values
           onChange={(event) => {
             const { value } = event.target;
@@ -167,17 +169,18 @@ catch(err){
             ))}
         </Select>
       </FormControl>
-      <br/><br/>
+      </div>
       </>
       );
     }
     else{
           Inputs.push(
       <>
-        <MDBInput label={convertCamelCaseToSpaced(i)} name={i} placeholder={`Enter ${convertCamelCaseToSpaced(i)}`} type={
+        <label>{convertCamelCaseToSpaced(i)}</label>
+        <MDBInput name={i} placeholder={`Enter ${convertCamelCaseToSpaced(i)}`} type={
           i==='dateOfBirth' ? 'date':i==='password' ? 'password':"text"
         }  onChange={(e)=>handleTextChange(e,i)}/>
-        <br />
+        
 
       </>
     );
