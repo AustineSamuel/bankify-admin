@@ -197,8 +197,10 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
       if(!list)continue;
       Inputs.push(
         <>
+        
+      <div style={{marginTop:10}}>
+  <label>{convertToTitleCase(i)}</label>  
         <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">{convertToTitleCase(i)}</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
@@ -218,7 +220,7 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
             ))}
         </Select>
       </FormControl>
-      <br/><br/>
+      </div>
       </>
       );
     }
@@ -227,13 +229,16 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
     const inputsList=[];
     for(let prop in newInputs){
       inputsList.push(<>
-        <MDBInput label={convertToTitleCase(prop)} name={i} placeholder={`Enter ${convertToTitleCase(prop)}`} type={
+      
+      <div style={{marginTop:10}}>
+  <label>{convertToTitleCase(prop)}</label>  
+        <MDBInput name={i} placeholder={`Enter ${convertToTitleCase(prop)}`} type={
           i==='dateOfBirth' ? 'date':i==='password' ? 'password':"text"} value={newInputs[prop]}
          onChange={(e)=>{
           const newValue={...Appointment?.[i],[prop]:e.target.value}
           setAppointment({...Appointment,[i]:newValue});
         }}/>
-        <br />
+        </div>
       </>)
     }
 
@@ -245,10 +250,13 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
     if(typeof appointment?.[i]=='string'){
           Inputs.push(
       <>
-        <MDBInput label={convertToTitleCase(i)} value={Appointment?.[i]} name={i} placeholder={`Enter ${convertToTitleCase(i)}`} type={
+      <div style={{marginTop:10}}>
+  <label>{convertToTitleCase(i)}</label>  
+  
+        <MDBInput value={Appointment?.[i]} name={i} placeholder={`Enter ${convertToTitleCase(i)}`} type={
           i==='dateOfBirth' ? 'date':i==='password' ? 'password':"text"
         }  onChange={(e)=>handleTextChange(e,i)}/>
-        <br />
+        </div>
       </>
     );
       }
@@ -260,8 +268,10 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
     <Toaster/>
       <div className='editProfile'><br/>
       <h4 className='text-center'> <b>Add Appointment</b></h4> <br/>
+      
+  <div style={{marginTop:10}}>
+  <label>Select Embassy</label>  
       <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">Select Embassy</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
@@ -285,7 +295,8 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
             ))}
         </Select>
       </FormControl>
-     <br/><br/>
+      </div>
+     
 
         {Inputs}
 <br/>
@@ -293,8 +304,9 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
 
 <div className='addForm'>
   <br/>
+  <div style={{marginTop:10}}>
+  <label>Select input type</label>  
   <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">Select input type</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
@@ -314,11 +326,15 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
             ))}
         </Select>
       </FormControl>
-<br/><br/>
-<MDBInput label='Enter  input' placeholder="name" value={currentForm.name} onChange={(e)=>{
+      </div>
+
+
+<div style={{marginTop:10}}>
+  <label>Enter  input</label>
+<MDBInput  placeholder="name" value={currentForm.name} onChange={(e)=>{
             setCurrentForm({ ...currentForm, name:e.target.value});
 }}/>
-
+</div>
   <br/>
   <MDBBtn size="lg" style={{margin:"0 auto",borderRadius:"30px"}} onClick={()=>{
     if(currentForm.name===""){
@@ -350,7 +366,7 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
                         onChange={(e) => handleFormInputChange(index, e)}
                     />
                     <MDBBtn onClick={() => removeInput(index)} style={{fontSize:"smaller"}}>Remove</MDBBtn>
-                </div><br/></>
+                </div></>
             ))}  
 </div>
 

@@ -203,13 +203,13 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
       if(!list)continue;
       Inputs.push(
         <>
+        <div><label>{convertToTitleCase(i)}</label>
         <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">{convertToTitleCase(i)}</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          label={convertToTitleCase(i)}
           value={Appointment?.[i] || ""} // Use optional chaining to handle potential undefined values
           onChange={(event) => {
             const { value } = event.target;
@@ -224,6 +224,7 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
             ))}
         </Select>
       </FormControl>
+      </div>
       <br/><br/>
       </>
       );
@@ -233,12 +234,15 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
     const inputsList=[];
     for(let prop in newInputs){
       inputsList.push(<>
-        <MDBInput label={convertToTitleCase(prop)} name={i} placeholder={`Enter ${convertToTitleCase(prop)}`} type={
+      <div>
+        <label>{convertToTitleCase(prop)}</label>
+        <MDBInput name={i} placeholder={`Enter ${convertToTitleCase(prop)}`} type={
           i==='dateOfBirth' ? 'date':i==='password' ? 'password':"text"} value={newInputs[prop]}
          onChange={(e)=>{
           const newValue={...Appointment?.[i],[prop]:e.target.value}
           setAppointment({...Appointment,[i]:newValue});
         }}/>
+        </div>
         <br />
       </>)
     }
@@ -251,28 +255,30 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
     if(typeof appointment?.[i]=='string'){
           Inputs.push(
       <>
-        <MDBInput label={convertToTitleCase(i)} value={Appointment?.[i]} name={i} placeholder={`Enter ${convertToTitleCase(i)}`} type={
+      <div>
+      <label>{convertToTitleCase(i)}</label>
+        <MDBInput  value={Appointment?.[i]} name={i} placeholder={`Enter ${convertToTitleCase(i)}`} type={
           i==='dateOfBirth' ? 'date':i==='password' ? 'password':"text"
         }  onChange={(e)=>handleTextChange(e,i)}/>
+        </div>
         <br />
       </>
     );
       }
   }
 
-  <MDBInput className='' />
   return (
     <>
     <Toaster/>
       <div className='editProfile'><br/>
       <h4 className='text-center'> <b>Add Appointment</b></h4> <br/>
+      <label>Select Embassy</label>
+
       <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">Select Embassy</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          label={'Select Embassy'}
           value={selectedEmbassy?.name} // Use optional chaining to handle potential undefined values
           onChange={(event) => {
             const { value } = event.target;
@@ -299,8 +305,10 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
 
 <div className='addForm'>
   <br/>
+  
+  <div>
+  <label>Select input type</label>  
   <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">Select input type</InputLabel>
         <Select
           size="small"
           labelId="demo-simple-select-label"
@@ -320,11 +328,14 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
             ))}
         </Select>
       </FormControl>
-<br/><br/>
-<MDBInput label='Enter  input' placeholder="name" value={currentForm.name} onChange={(e)=>{
+</div>
+
+  <div>
+  <label>Enter  input</label>  
+<MDBInput placeholder="name" value={currentForm.name} onChange={(e)=>{
             setCurrentForm({ ...currentForm, name:e.target.value});
 }}/>
-
+  <div/>
   <br/>
   <MDBBtn size="lg" style={{margin:"0 auto",borderRadius:"30px"}} onClick={()=>{
     if(currentForm.name===""){
@@ -351,12 +362,13 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
                     <MDBInput
                         type={input.type}
                         name={`input-${index}`}
-                        label={input.name}
+                  label={input?.name}
+                        
                         value={input.value}
                         onChange={(e) => handleFormInputChange(index, e)}
                     />
                     <MDBBtn onClick={() => removeInput(index)} style={{fontSize:"smaller"}}>Remove</MDBBtn>
-                </div><br/></>
+                </div></>
             ))}  
 </div>
 
@@ -364,6 +376,7 @@ const AddOperation=await updateData("Appointment",originalAppointment.docId,{...
 <MDBBtn size="lg" style={{width:"100%",borderRadius:30}} onClick={
   ()=>submit()
 }>{isSubmitting ? <PulseLoader color='white'/>:"Submit"}</MDBBtn>
+      </div>
       </div>
     </>
   );

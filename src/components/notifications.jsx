@@ -112,8 +112,9 @@ setNotification({
           <Toaster/>
             <h3>Send notification</h3><br />
             <div>
+              
+  <label>Select users</label>
       <FormControl sx={{ width: '100%' }} size="small">
-        <InputLabel id="demo-multiple-chip-label">Select users</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
@@ -143,22 +144,26 @@ setNotification({
       </FormControl>
     </div>
             
-            <MDBInput placeholder='Enter title' label='Title' style={{
+<div style={{marginTop:10}}>
+  <label>Title</label>
+            <MDBInput placeholder='Enter title' style={{
                 width:"100%",
-                margin:10
             }} onChange={(e)=>{
               setNotification({
                 ...notification,
                 title:e.target.value
               })
             }}/>
-
-<MDBInput label='Body' rows={4} onChange={(e)=>{
+            </div>
+<div>
+  <label>Body</label>
+<MDBInput rows={4} onChange={(e)=>{
               setNotification({
                 ...notification,
                 body:e.target.value
               })
             }}/>
+            </div>
 
             <br/>
             <MDBBtn style={{width:"100%"}} onClick={handleSendNotification}>{isLoading ? <ClipLoader size={18} color="white"/>:"Send Notification"}</MDBBtn>

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { MDBListGroup, MDBBtn } from 'mdb-react-ui-kit';
-import { Home, List, Bookmark, Camera, UserPlus, MousePointer, PlusSquare, Power } from 'react-feather';
+import { Home, List, Bookmark, Camera, UserPlus, MousePointer, PlusSquare, Power, Edit3 } from 'react-feather';
 import {useNavigate} from 'react-router-dom'
 const sideBarsList = [
   {
@@ -87,8 +87,16 @@ function UserSideBarContent({closeMenu}) {
   const navigate=useNavigate();
   return (
     <div>
-      <div style={{textAlign:'start'}}>
+      <div className='d-flex align-items-center justify-content-between'>
+        <div style={{textAlign:'start'}}>
 <img src='/logo.jpg' width={50} height={50} alt='Immintegral logo'/><b>Immintegral</b>
+</div>
+<MDBBtn color='secondary' style={{maxWidth:"max-content",padding:6,minWidth:"max-content"}} rounded>
+<Edit3 onClick={()=>{
+  navigate("/EditFaqs")
+}}/>
+</MDBBtn>
+
 </div>
     <MDBListGroup className="side-menu">
       {sideBarsList.map((item, index) => (
