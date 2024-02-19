@@ -57,7 +57,7 @@ setIsLoading(false);
 <br/>
 <div style={{textAlign:"start"}}>
     <label>Username</label>
-<MDBInput placeholder="Enter username" size="large" style={{borderColor:"black"}} onChange={(e)=>{
+<MDBInput size="large" style={{borderColor:"black"}} onChange={(e)=>{
     setInputs({
         ...inputs,
         username:e.target.value
@@ -66,7 +66,7 @@ setIsLoading(false);
 </div>
 <div style={{textAlign:"start"}}>
     <label>Password</label>
-<MDBInput placeholder="Enter password" size="large" onChange={(e)=>{
+<MDBInput size="large" onChange={(e)=>{
     setInputs({
         ...inputs,
         password:e.target.value
