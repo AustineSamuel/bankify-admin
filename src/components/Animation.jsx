@@ -15,7 +15,7 @@ export default function Animation(){
     This is the dashboard. Click below to see the site from the user's end.
 </div>
 
-<MDBBtn size="large" style={{width:"100%"}}><a href='https://Immintegral-eight.vercel.app' target="_blank" style={{color:"white"}}>View client </a></MDBBtn>
+<MDBBtn size="large" style={{width:"100%"}}><a href='https://immintegral.com' target="_blank" style={{color:"white"}}>View client </a></MDBBtn>
         </div>
     );
  }
