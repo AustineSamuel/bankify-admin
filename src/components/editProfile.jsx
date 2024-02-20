@@ -104,14 +104,14 @@ else{
                         <span>Face verification completed successfully</span>
                      <br/>   <MDBBadge pill className='me-2 text-dark' color='light' light>
         23 hours ago
- */
-        const addActivities = await AddData(collection(db, "Activities"), {
-          title:userCopy.username+" profile was updated",
-          text: "Profile was updated by admin successfully.",
-          added_at: getCurrentTimestamp(),
-          username:userCopy?.username,
-          userId:userCopy.uid
-      })
+//  */
+//         const addActivities = await AddData(collection(db, "Activities"), {
+//           title:userCopy.username+" profile was updated",
+//           text: "Profile was updated by admin successfully.",
+//           added_at: getCurrentTimestamp(),
+//           username:userCopy?.username,
+//           userId:userCopy.uid
+//       })
       toast.success(userCopy.username+" profile was updated")
       setTimeout(() => {
         navigate("/VerifiedUsers");
