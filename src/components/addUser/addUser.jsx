@@ -19,6 +19,7 @@ import { getCurrentTimestamp } from '../../Logics/DateFunc';
 import { docQr } from '../../Logics/docQr_ORGate';
 import { generateUniqueString } from '../../Logics/date';
 import {convertCamelCaseToSpaced} from '../../Logics/DateFunc'
+import { fileToDataURL } from '../../utils/funcs';
 
 const AddUser = () => {
   const user = {
@@ -116,17 +117,16 @@ if(existingUser.length > 0){
   return toast.error("User with email or username already exists");
 }
 console.log("file",newUserDetails.biometricData.passport)
-const serverURL=await uploadToFirebase(newUserDetails.biometricData.passport);
+fileToDataURL(newUserDetails.biometricData.passport,async function(serverURL){
 newUserDetails.biometricData.passport=serverURL;
-console.log(serverURL)
+console.log(serverURL);
+const add=await AddData(collection(db,"Users"),{...newUserDetails,added_at:getCurrentTimestamp(),uid:"id_"+""+Date.now()+""+generateUniqueString()})
+toast.success("User Added successfully")
+setTimeout(() => {
+  navigate("/")
+},1000);
+})
 
-
-  const add=await AddData(collection(db,"Users"),{...newUserDetails,added_at:getCurrentTimestamp(),uid:"id_"+""+Date.now()+""+generateUniqueString()})
-  console.log(add);
-  toast.success("User Added successfully")
-  setTimeout(() => {
-    navigate("/")
-  },1000);
  // console.log(newUserDetails);
 }
 catch(err){

@@ -5,3 +5,10 @@ export function getRandomNumber(min, max) {
   export function generateUID(){
 return "id".Date.now();
   }
+  export function fileToDataURL(file, callback) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      callback(event.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
