@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import "./style.css";
-import { MDBInput,MDBBtn } from 'mdb-react-ui-kit';
+import { MDBInput,MDBBtn,MDBListGroupItem,MDBListGroup } from 'mdb-react-ui-kit';
 import { Camera } from 'react-feather';
 import {BounceLoader,PulseLoader} from 'react-spinners';
 import uploadToFirebase from '../../utils/uploadToFirebase';
@@ -84,7 +84,30 @@ const AddAppointment = () => {
 
   const navigate=useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(null);
-const [form,setForm]=useState([]);
+const [form,setForm]=useState([
+  {
+    type:"text",
+    name:"Surname"
+  },
+  {
+    name:"First Name",
+    type:"text"
+  },
+  {
+    name:"Purpose of travel",
+    type:"text"
+  },
+  {
+    name:"Applicant Document delivery address",
+    type:"text"
+  },
+  {
+    name:"Consular Appointment detail",
+    data:[],
+    type:"select"
+  }
+]);
+
 const [currentForm,setCurrentForm]=useState({
   type:"",
   name:""
@@ -122,6 +145,16 @@ const handleFormInputChange = (index, event) => {
   status:""
 }
 );
+
+//const [currentOption,setCurrentOption]=useState("");
+const addOption=(i)=>{
+  const currentOption=document.querySelector("#ConsularAppointmentDetail")?.value;
+  console.log(currentOption);
+  if(currentOption==='')return
+ form[i]?.data?.push(currentOption);
+ console.log(form[i]);
+setForm([...form]);
+}
 const handleTextChange=(e,name)=>{
   const {value}=e.target
   setAppointment({...Appointment,[name]:value})
@@ -155,6 +188,9 @@ const validateData = (appointment) => {
 useEffect(()=>{
 
 },[currentForm]);
+// useEffect(()=>{
+//     console.log(form);
+// },[form]);
 
 async function getEmbassies(){
   const em= await docQr("Embassy",{
@@ -356,8 +392,32 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
 <small>No Form Added</small>
   </div>
   </>}
-  {form.map((input, index) => (<>
-                <div key={index} className='d-flex'style={{gap:5}}>
+  {form.map((input, index) =>{
+if(input?.data){
+  return (<><br/><br/>
+  <label>Consular Appointment detail (options):</label>
+  <div key={index} style={{gap:5,marginTop:5}}>
+
+  
+  {input?.data?.map((text,textIndex)=>{ 
+    return(<div className='listItem' key={textIndex+""+Date.now()} noBorders color='light' className='px-3 mb-2 rounded-3' style={{margin:"0 auto",width:"100%"}}>
+        <div className='d-flex align-items-center justify-content-between'  style={{width:"100%"}}><span style={{padding:10}}>{text}</span>
+         <MDBBtn rounded color='primary' onClick={()=>{
+              console.log(text,textIndex);
+form?.[index]?.data.splice(textIndex,1);
+console.log(form);
+setForm([...form]);
+         }}>x</MDBBtn></div>
+      </div>)})}
+
+
+  </div>
+  </>)
+}
+
+
+    return (<>
+                <div key={index} className='d-flex'style={{gap:5,marginTop:5}}>
                     <MDBInput
                         type={input.type}
                         name={`input-${index}`}
@@ -367,9 +427,33 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
                     />
                     <MDBBtn onClick={() => removeInput(index)} style={{fontSize:"smaller"}}>Remove</MDBBtn>
                 </div></>
-            ))}  
+            )
+          })
+        }  
 </div>
 
+
+
+
+
+
+
+<div key={"Date"+Date.now()} className='d-flex'style={{gap:5,marginTop:5}}>
+                    <MDBInput
+                        id='ConsularAppointmentDetail'
+                        name={`Consular Appointment detail (options)`}
+                        label={"Add Consular Appointment detail"}
+                        onChange={(e) =>{
+                          const {value}=e.target;
+                          console.log(value)
+                        }}
+                    />
+                    <MDBBtn  onClick={() =>{
+                      form.map((e,index)=>{
+                       if(e.type==='select')addOption(index);
+                      });
+                    }} style={{fontSize:"smaller"}}>Add</MDBBtn>
+                </div>
 <br/>
 <MDBBtn size="lg" style={{width:"100%",borderRadius:30}} onClick={
   ()=>submit()

@@ -50,3 +50,12 @@ margin:10px;
   .accordion-item .accordion-button{
     padding:5px !important;
   }
+
+  .listItem{
+    padding:5px;
+    border-radius:2px;
+    background:rgb(230, 227, 231) !important;
+    margin-top:5px;
+    width:100%;
+    box-shadow:1px 1px 10px 0px rgb(238, 237, 240);
+  }

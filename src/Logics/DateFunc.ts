@@ -26,14 +26,10 @@ export function formatDate_Name(date=new Date()) {
 
   export function convertCamelCaseToSpaced(inputString:string) {
     // Use a regular expression to insert a space before each uppercase letter
-    return inputString.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+    return convertToTitleCase(inputString);//.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase());
   }
   
-  // Example usage:
-  const camelCaseString = "NeverMarried";
-  const spacedString = convertCamelCaseToSpaced(camelCaseString);
-  console.log(spacedString);  // Output: "never married"
-  
+
   export const convertToTitleCase = (str:string) => {
     return str
       .replace(/([A-Z])/g, " $1") // Add space before uppercase letters

@@ -52,7 +52,7 @@ setIsLoading(false);
     <div className="d-flex justify-content-center align-items-center">
 <CustomAvatar src='/logo.jpg' size={100}/>
 </div>
-<b style={{textShadow:"1px 1px 1px white"}}>Login to admin</b>
+<b style={{textShadow:"1px 1px 1px white"}}>Login to immintegral admin</b>
 <br/>
 <br/>
 <div style={{textAlign:"start"}}>
