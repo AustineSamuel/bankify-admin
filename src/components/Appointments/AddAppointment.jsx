@@ -85,28 +85,26 @@ const AddAppointment = () => {
   const navigate=useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(null);
 const [form,setForm]=useState([
-  {
-    type:"text",
-    name:"Surname"
-  },
+  
   {
     name:"First Name",
     type:"text"
   },
+  
   {
-    name:"Purpose of travel",
+    name:"Last Name",
     type:"text"
   },
   {
-    name:"Applicant Document delivery address",
+    name:"Purpose Of Travel",
     type:"text"
   },
   {
-    name:"Purpose of travel",
+    name:"Applicant Document Delivery Address",
     type:"text"
   },
   {
-    name:"Consular Appointment detail",
+    name:"Consular Appointment Detail",
     data:[],
     type:"select"
   }

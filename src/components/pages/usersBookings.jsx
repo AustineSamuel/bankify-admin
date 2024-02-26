@@ -23,7 +23,7 @@ import {
 import EmbassyCardSkeleton from '../Appointments/EmbassyList/EmbassyCardSkeleton';
 import EmbassyCard from '../Appointments/EmbassyList/EmbassyCard';
 import useUserDetails from '../../Hooks/userUserDetails';
-import { getCurrentTimestamp, validateData } from '../../Logics/DateFunc';
+import { convertToTitleCase, getCurrentTimestamp, validateData } from '../../Logics/DateFunc';
 import { AddData } from '../../Logics/addData';
 import { collection } from 'firebase/firestore';
 import {db} from '../../firebase.config'
@@ -32,6 +32,7 @@ import { updateData } from '../../Logics/updateData';
 import CustomAvatar from '../../utils/customAvatar';
 import { Calendar, Mail, MapPin, Phone, User } from 'react-feather';
 import {useNavigate} from 'react-router-dom';
+import ApproveDataForm from './approveDataForm';
 export default function UserBookings() {
 
   // Assuming bookings array
@@ -171,11 +172,16 @@ switch (status) {
 //appointment?.status=='approved' ? 'success':undefined
 const [buttonText,setButtonText]=useState("Action");
 const [status_,setStatus_]=useState(status);
+console.log(appointment);
 const userId=appointment?.userId || "";
-const approve=async ()=>{
+const approve=async (data)=>{
+  
+ setApproveModel(false);
+ setShowApplicationDetails(false);
+ 
 try{
  setButtonText("approving...") 
- const update=await updateData("Bookings",appointment.docId,{...appointment,status:"approved",approved_at:getCurrentTimestamp()});
+ const update=await updateData("Bookings",appointment.docId,{...appointment,status:"approved",approved_at:getCurrentTimestamp(),approvedData:data});
  console.log(update);
  setStatus_("approved");
  setButtonText("Action");
@@ -206,6 +212,8 @@ toast.error(err.message || "Something went wrong");
 
  }
  const [user,setUser]=useState(false);
+ const [showApplicationDetails,setShowApplicationDetails]=useState(false);
+// const []=useState();
 useEffect(()=>{
 async function getUser(){
   const user=await docQr("Users",{
@@ -232,7 +240,127 @@ useEffect(()=>{
 },[user]);
 
 const navigate=useNavigate();
-  return (
+const FormDetailsData=[];
+
+for(let i in appointment.formValues){
+  FormDetailsData.push(<>
+  <div className='d-flex align-items-center' style={{width:"100%",minHeight:"40px",marginTop:10,borderRadius:"10px",padding:3,border:"1px solid lightgrey"}}>
+    <b style={{padding:2}}>{convertToTitleCase(i)}:</b><span>{appointment.formValues[i]}</span>
+  </div>
+  </>);
+}
+
+
+const [approveModel,setApproveModel]=useState(false);
+
+
+return (
+    <>
+      <MDBModal open={showApplicationDetails} setOpen={setShowApplicationDetails} tabIndex='-1'>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>{user.username } Application Details</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={() => setShowApplicationDetails(false)}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+
+<div>
+
+{
+FormDetailsData
+}
+<br/>
+{appointment.status!=='approved'  && <div className='d-flex justify-content-center'>
+<MDBBtn fullWidth style={{width:"100%"}} color='primary' size={"lg"} onClick={()=>{
+  setShowApplicationDetails(false);
+  setApproveModel(true);
+}} rounded>Approve Application</MDBBtn>
+</div>}
+
+
+</div>
+
+
+
+
+
+            </MDBModalBody>
+
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={() => setShowApplicationDetails(false)}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+
+
+
+
+      <MDBModal open={approveModel} closeOnEsc setOpen={setApproveModel} tabIndex='-1'>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>{user.username}' APPOINTMENT CONFIRMATION DETAILS</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={() => setApproveModel(false)}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+
+<ApproveDataForm user={user} uid={appointmentId} formValues={appointment?.formValues || {}} successCallback={(data)=>approve(data)}/>
+            </MDBModalBody>
+
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={() => setApproveModel(false)}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <MDBCard className="h-100">
       <MDBCardBody>
         <MDBCardTitle className='d-flex justify-content-between  ' style={{flexFlow:"row wrap"}}><span>Appointment ID:</span> {appointmentId}
@@ -247,22 +375,32 @@ const navigate=useNavigate();
        {appointment?.declined_at && <MDBCardText>Declined : {appointment.declined_at}</MDBCardText>}
 
 
-<div className='d-flex align-items-center justify-content-start' title='click to open profile' onClick={()=>{
+<div className='d-flex align-items-center justify-content-start' title='click to open profile'  style={{borderRadius:10,border:"1px solid lightgrey",padding:16}}>
+  <div  onClick={()=>{
   //open profile
   sessionStorage.setItem("uid",userId);
   navigate("/Profile")
-}} style={{borderRadius:10,border:"1px solid lightgrey",padding:16}}>
-  <CustomAvatar size={60} src={user?.biometricData?.passport} alt='' />
+}}><CustomAvatar size={80} src={user?.biometricData?.passport} alt='' /></div>
   <div style={{padding:17}} >
     {user ? (
         <>
-          <p><User size={18} /> {user.username}</p>
-          <p><MapPin size={18} /> {user.address}</p>
+          <p onClick={()=>{
+  //open profile
+  sessionStorage.setItem("uid",userId);
+  navigate("/Profile")
+}}><User size={18} /> {user.username}</p>
+          <p onClick={()=>{
+  //open profile
+  sessionStorage.setItem("uid",userId);
+  navigate("/Profile")
+}}><MapPin size={18} /> {user.address}</p>
+          <MDBBtn onClick={()=>setShowApplicationDetails(!showApplicationDetails)} color='tertiary'>
+            Application Details</MDBBtn>
         </>
       ) : (
         <>
           <Skeleton animation="wave" variant="text" width={150} height={20} />
-          <Skeleton animation="wave" variant="text" width={250} height={20} />
+          <Skeleton animation="wave" variant="text" style={{maxWidth:"100%"}} width={250} height={20} />
         </>
       )}
   </div>
@@ -277,7 +415,8 @@ const navigate=useNavigate();
           </MDBDropdownToggle>
           <MDBDropdownMenu>
             <MDBDropdownItem link onClick={() => {
-              approve();
+              setShowApplicationDetails(false);
+  setApproveModel(true);
             }}>Approve</MDBDropdownItem>
             
             <MDBDropdownItem link onClick={() => {
@@ -292,5 +431,5 @@ const navigate=useNavigate();
 
       </MDBCardBody>
     </MDBCard>
-  );
+</>  );
 }
