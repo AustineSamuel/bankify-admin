@@ -102,6 +102,10 @@ const [form,setForm]=useState([
     type:"text"
   },
   {
+    name:"Purpose of travel",
+    type:"text"
+  },
+  {
     name:"Consular Appointment detail",
     data:[],
     type:"select"
@@ -180,7 +184,13 @@ const validateData = (appointment) => {
       }
     }
   }
-
+const  data=form.filter((e)=>e?.data);
+if(data){
+  if(data[0]?.data?.length < 1){
+  toast.error("Please add Consular Appointment detail (options):");
+    return false;
+  }
+}
   // If all fields are valid, return true
   return true;
 };
@@ -387,6 +397,9 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
 
 <div className='addForm'>
   <br/>
+  
+<h4 style={{fontWeight:"bolder"}}>User form</h4>
+
   {form.length===0 && <>
   <div className='text-center'>
 <small>No Form Added</small>

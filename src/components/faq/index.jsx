@@ -19,8 +19,9 @@ import {db} from '../../firebase.config'
 import { convertToTitleCase, getCurrentTimestamp } from '../../Logics/DateFunc';
 import { docQr } from '../../Logics/docQr_ORGate';
 import { generateUniqueString } from '../../Logics/date';
-import { updateData } from '../../Logics/updateData';
+import { deleteItemByIndex, updateData } from '../../Logics/updateData';
 import { getAllDoc } from '../../Logics/getAllDoc';
+import { deleteData } from '../../Logics/deleteData';
 
 
 
@@ -80,9 +81,11 @@ const submit=async () =>{
         return toast.error("Please one or more questions");
     }
 setIsSubmitting(true);
-console.log(docId);
+console.log(faqs,docId);
 if(docId){
-await updateData("Faqs",docId,faqs);
+   await deleteData("Faqs",docId);
+await AddData(collection(db,"Faqs"),faqs);
+getSavedFaqs();
 }
 else{
 await AddData(collection(db,"Faqs"),faqs);
@@ -119,7 +122,7 @@ setCurrentFaqs({...currentFaqs,answer:value})
 <MDBAccordion>
 
     {faqs.map((e,i)=>(<MDBAccordionItem style={{padding:6}}  collapseId={'id'+i} headerTitle={<>{e.question}
-    <span style={{padding:10}}>        <MDBBtn onClick={()=>{
+    <span style={{padding:10}}>        <MDBBtn onClick={async ()=>{
             faqs.splice(i,1);
             setFaqs([...faqs]);
             console.log(faqs);
