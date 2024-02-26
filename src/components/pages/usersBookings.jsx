@@ -299,7 +299,7 @@ FormDetailsData
 
 
 
-      <MDBModal open={approveModel} closeOnEsc setOpen={setApproveModel} tabIndex='-1'>
+      <MDBModal clickableOutside={false} open={approveModel} closeOnEsc setOpen={setApproveModel} tabIndex='-1'>
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>

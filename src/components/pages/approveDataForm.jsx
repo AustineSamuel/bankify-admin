@@ -3,6 +3,41 @@ import {MDBInput,MDBBtn} from 'mdb-react-ui-kit';
 import { appointment } from '../_mock/user';
 import {toast} from 'react-hot-toast';
 import { convertToTitleCase } from '../../Logics/DateFunc';
+
+
+function getCurrentDate() {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = months[now.getMonth()];
+    const dayOfWeek = days[now.getDay()];
+    const date = now.getDate();
+
+    const formattedDate = `${dayOfWeek} ${month} ${date}, ${year}`;
+
+    return formattedDate;
+}
+
+function getCurrentTime() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight (0 hours)
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    const formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+
+    return formattedTime;
+}
+
+
+
 const ApproveDataForm=({formValues,user,uid,successCallback})=>{
     const [data,setData]=useState({
 applicantName:user.fullName,
@@ -12,6 +47,7 @@ numberOfApplicants:"1",
 visaCategory:"",
 documentDeliveryType:"",
 consularAddress:"",
+deliveryAddress:"",
 MRV_Name:"",
 MRV_Value:"",
 DS_160_ConfirmationNumber:"",
@@ -80,6 +116,12 @@ const validateData = (data) => {
     const {value}=e.target
     setData({...data,visaCategory:value});
 }}/>
+
+<label>Visa Priority</label><br/>
+<MDBInput placeholder=' Enter Visa Categor?y' value={data.visaPriority} onChange={(e)=>{
+    const {value}=e.target
+    setData({...data,visaPriority:value});
+}}/>
 <label>Document delivery type</label><br/>
 <MDBInput placeholder=' Enter Document delivery type' value={data.documentDeliveryType} onChange={(e)=>{
     const {value}=e.target
@@ -89,6 +131,13 @@ const validateData = (data) => {
     const {value}=e.target
     setData({...data,consularAddress:value});
 }}/>
+
+
+<label>Delivery Address</label><br/><MDBInput value={data.deliveryAddress} placeholder=' Enter Consular Address' onChange={(e)=>{
+    const {value}=e.target
+    setData({...data,deliveryAddress:value});
+}}/>
+
 <label>MRV Name</label>
 <br/><MDBInput placeholder=' Enter MRV Name' value={data.MRV_Name} onChange={(e)=>{
     const {value}=e.target
@@ -119,11 +168,14 @@ const validateData = (data) => {
 
 
         </div>
-
+        
 <MDBBtn size={"lg"} style={{width:"100%"}} rounded color='dark' onClick={()=>{
     if(validateData(data)){
         console.log("called success with input data");
-        successCallback(data);
+        successCallback({...data,
+        date:getCurrentDate(),
+    time:getCurrentTime()
+});
     }
 }}>Submit And Approve</MDBBtn>
         <br/><br/>
