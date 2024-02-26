@@ -27,7 +27,7 @@ const AddUser = () => {
     password: "",
     email: "",
     fullName: "",
-    NextOfKing: "",
+    NextOfKin: "",
     dateOfBirth: "",
     gender: ["Male","Female"],
     address: "",
