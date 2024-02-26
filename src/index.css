@@ -23,6 +23,20 @@ code {
 
 }
 
+:root{
+  
+  --blue-color: #0da139; /* Dark Blue */
+  --blue-color2:#0fb441; /* Blue */
+  --blue-color3: #11ce4a; /* Light Blue */
+  --color:#0da139;
+  --color-opacity-1:#0eb340;
+  --color-opacity-2:#07d445;
+  --color-opacity-3:#0ed449;
+  --color-opacity-4:#13e652;
+  --white:rgba(236,236,236);
+  --colorDark:#07832c;
+}
+
 @media screen and (min-width:700px) {
 *[class*=pcOnly]{
   display:initial;

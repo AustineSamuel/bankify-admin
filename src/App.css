@@ -125,3 +125,11 @@ max-width:100%;
     max-width:30%;
   }
   }
+
+  
+*[class*=primary]{
+  background: #07662f !important;
+}
+*[class*=tertiary]{
+  color: #07662f !important;
+}
