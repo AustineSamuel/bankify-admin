@@ -62,7 +62,7 @@ export default function UserNav({openMenu,adminDetails}) {
                     </MDBBadge>
                 </a>
 
-               <div style={{padding:15}}> <CustomAvatar src="/images/user.png" alt="User Avatar" /></div>
+               <div style={{padding:1}}> <CustomAvatar src="/images/user.png" alt="User Avatar" /></div>
 
             </div>
 

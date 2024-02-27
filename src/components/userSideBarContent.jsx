@@ -88,8 +88,9 @@ function UserSideBarContent({closeMenu}) {
   return (
     <div>
       <div className='d-flex align-items-center justify-content-between'>
-        <div style={{textAlign:'start'}}>
-<img src='/logo.jpg' width={50} height={50} alt='Immintegral logo'/><b>Immintegral</b>
+        <div className='d-flex align-items-center' style={{textAlign:'start'}}>
+<div style={{padding:15}}><img src='/logo.jpg' width={50} height={50} alt='Immintegral logo'/></div>
+<b>Immintegral</b>
 </div>
 <MDBBtn color='secondary' style={{maxWidth:"max-content",padding:6,minWidth:"max-content"}} rounded>
 <Edit3 onClick={()=>{
