@@ -122,6 +122,16 @@ const validateData = (data) => {
     const {value}=e.target
     setData({...data,visaPriority:value});
 }}/>
+
+
+
+<label>Visa Class</label><br/>
+<MDBInput placeholder=' Enter Visa Categor?y' value={data.visaClass} onChange={(e)=>{
+    const {value}=e.target
+    setData({...data,visaClass:value});
+}}/>
+
+
 <label>Document delivery type</label><br/>
 <MDBInput placeholder=' Enter Document delivery type' value={data.documentDeliveryType} onChange={(e)=>{
     const {value}=e.target
