@@ -2,7 +2,7 @@ import {MDBBtn} from 'mdb-react-ui-kit'
 export default function Animation(){
     return (
     <div style={{textAlign:"center"}}>
-<img src='/images/viewCleint.gif' style={{width:"300px",height:"300px",maxWidth:"100%",borderRadius:"50%"}} alt=''/>
+<img src='/images/viewCleint.gif' hidden style={{width:"300px",height:"300px",maxWidth:"100%",borderRadius:"50%"}} alt=''/>
 <br/><br/>
 <div style={{
       backgroundColor: '#d1ecf1', // Background color for info alert
