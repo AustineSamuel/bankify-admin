@@ -4,10 +4,10 @@ import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBListGroup, MDBListG
 import { deleteData } from '../../Logics/deleteData';
 import {toast} from 'react-hot-toast';
 import {useNavigate} from 'react-router-dom';
+import {convertToTitleCase} from '../../Logics/DateFunc';
 import { Edit2, Trash2 } from 'react-feather';
 import {BounceLoader} from 'react-spinners';
 const EmbassyCard = ({ embassy,deleteCallback }) => {
-
 const {docId}=embassy
   const [isDeleting,setIsDeleting]=useState(false);
   const navigate=useNavigate()
@@ -53,7 +53,7 @@ deleteCallback()
         <ul>
           {Object.entries(embassy.operatingHours).map(([day, hours]) => (
             <li key={day}>
-              <strong>{day}:</strong> {hours}
+              <strong>{convertToTitleCase(day)}:</strong> {hours}
             </li>
           ))}
         </ul>

@@ -25,7 +25,38 @@ import { generateUniqueString } from '../../Logics/date';
 const AddEmbassy = () => {
   const embassy = {
     name: "",
-    country: "",
+    country:[
+      "Australia",
+      "Brazil",
+      "Canada",
+      "China",
+      "France",
+      "Germany",
+      "India",
+      "Indonesia",
+      "Italy",
+      "Japan",
+      "Mexico",
+      "Netherlands",
+      "Nigeria",
+      "Pakistan",
+      "Philippines",
+      "Russia",
+      "Saudi Arabia",
+      "South Africa",
+      "South Korea",
+      "Spain",
+      "Sweden",
+      "Switzerland",
+      "Taiwan",
+      "Thailand",
+      "Turkey",
+      "Ukraine",
+      "United Arab Emirates",
+      "United Kingdom",
+      "United States",
+      "Vietnam"
+    ],
     city: "",
     address: "",
     contactInformation: {
@@ -56,7 +87,8 @@ const AddEmbassy = () => {
   const [isSubmitting, setIsSubmitting] = useState(null);
 
 
-  const [Embassy, setEmbassy] = useState({ ...embassy,embassy_id:"embassy_"+Date.now()+''+generateUniqueString()});
+  const [Embassy, setEmbassy] = useState({ ...embassy,embassy_id:"embassy_"+Date.now()+''+generateUniqueString(),
+  country:embassy.country[0]});
 const handleTextChange=(e,name)=>{
   const {value}=e.target
   setEmbassy({...Embassy,[name]:value})

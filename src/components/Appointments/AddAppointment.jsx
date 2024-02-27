@@ -20,13 +20,8 @@ import { convertToTitleCase, getCurrentTimestamp } from '../../Logics/DateFunc';
 import { docQr } from '../../Logics/docQr_ORGate';
 import { generateUniqueString } from '../../Logics/date';
 
-
-
-const AddAppointment = () => {
-  const [embassies,setEmbassies]=useState([]);
-  const [selectedEmbassy,setSelectedEmbassy]=useState([]);
-  const appointment = {
-    type:  [
+/**
+ * [
       "Consultation",
       "Check-up",
       "Treatment",
@@ -55,7 +50,16 @@ const AddAppointment = () => {
       "Fitness Evaluation",
       "Alternative Medicine Consultation",
       "Other"
-  ],
+  ]
+ */
+
+
+
+const AddAppointment = () => {
+  const [embassies,setEmbassies]=useState([]);
+  const [selectedEmbassy,setSelectedEmbassy]=useState([]);
+  const appointment = {
+    type:"" ,
     status: ["Scheduled", "Confirmed", "Cancelled", "Completed"],
     notes: "",
     requiredDocuments: [
@@ -135,7 +139,7 @@ const handleFormInputChange = (index, event) => {
   setForm(updatedForm);
 };
 
-  const [Appointment, setAppointment] = useState({ ...appointment,reminderSettings: {
+  const [Appointment, setAppointment] = useState({ ...appointment,type:appointment.requiredDocuments[0],status:appointment?.status[0],reminderSettings: {
     email: true,
     sms: false
   },
@@ -220,6 +224,7 @@ getEmbassies();
 
 const submit=async () =>{
   if(!validateData(Appointment))return
+  return console.log(Appointment);
   try{
     setIsSubmitting(true);
 const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:"apt_"+Date.now(),forms:form});

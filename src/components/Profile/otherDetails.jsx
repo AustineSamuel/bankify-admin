@@ -23,7 +23,7 @@ export default function OtherCard({ user }) {
 
         <p>Verification Status: {user.verified ? "verified":"unverified"}</p>
         <p>Contact Number: {user?.contactNumber}</p>
-        <p>Language Proficiency: {user?.LanguageProficiency}</p>
+        <p>Language : {user?.Language}</p>
         <p>Nationality: {user?.Nationality}</p>
         <p>Marital status: {user.maritalStatus}</p>
       </div>

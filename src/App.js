@@ -40,6 +40,9 @@ setTimeout(()=>{
   setMenuOpen(false);
 },800)
 }
+if(window.location.protocol=='http' && window.location.origin!='localhost'){
+  window.location.replace("http","https")
+}
 if(!sessionStorage.getItem("adminDetails")){
   return <Login/>
 }

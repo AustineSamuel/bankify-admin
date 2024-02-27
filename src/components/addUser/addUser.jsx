@@ -32,10 +32,41 @@ const AddUser = () => {
     gender: ["Male","Female"],
     address: "",
     IdNumber:"",
-    Nationality: "",
+    Nationality:[
+      "Australia",
+      "Brazil",
+      "Canada",
+      "China",
+      "France",
+      "Germany",
+      "India",
+      "Indonesia",
+      "Italy",
+      "Japan",
+      "Mexico",
+      "Netherlands",
+      "Nigeria",
+      "Pakistan",
+      "Philippines",
+      "Russia",
+      "Saudi Arabia",
+      "South Africa",
+      "South Korea",
+      "Spain",
+      "Sweden",
+      "Switzerland",
+      "Taiwan",
+      "Thailand",
+      "Turkey",
+      "Ukraine",
+      "United Arab Emirates",
+      "United Kingdom",
+      "United States",
+      "Vietnam"
+    ],
     maritalStatus: ['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership'],
     status:['active','suspended'],
-    LanguageProficiency:'',
+    Language:'',
     contactNumber: "",
     biometricData: {
       facialFeatures: "",
@@ -49,9 +80,7 @@ const AddUser = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate=useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(null);
-
-
-  const [newUserDetails, setNewUserDetails] = useState({ ...user,gender:"",permissions:"user",status:"active"});
+  const [newUserDetails, setNewUserDetails] = useState({ ...user,gender:"",permissions:"user",status:"active",Nationality:user.Nationality[0]});
 const [isUploading,setIsUploading]=useState(false);
   const handleImageChange = async (e) => {
     setIsUploading(true)
