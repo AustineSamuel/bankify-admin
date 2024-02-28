@@ -331,8 +331,9 @@ const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,ap
             const { value } = event.target;
             console.log(value);
         console.log(event.target);
+        const embassy=embassies.filter((e)=>e.embassy_id===value)[0]
 
-            setAppointment({ ...Appointment, embassy_id: value || "" });
+            setAppointment({ ...Appointment, embassy_id: value || "" ,country:embassy.country});
                     //    setSelectEmbassy()
           }}
         >
