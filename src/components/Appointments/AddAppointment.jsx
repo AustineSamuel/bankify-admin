@@ -224,7 +224,7 @@ getEmbassies();
 
 const submit=async () =>{
   if(!validateData(Appointment))return
-  return console.log(Appointment);
+ // return console.log(Appointment);
   try{
     setIsSubmitting(true);
 const AddOperation=await AddData(collection(db,"Appointment"),{...Appointment,appointmentId:"apt_"+Date.now(),forms:form});
