@@ -75,7 +75,7 @@ return user?.username?.toLowerCase().includes(value?.toLowerCase());
   }
 const [isSubmitting,setIsSubmitting]=useState(false);
   const submit=async ()=>{
-    if(selectedUsersId.length === 0)return toast.error("Please select 1 or more users");
+  //  if(selectedUsersId.length === 0)return toast.error("Please select 1 or more users");
     setIsSubmitting(true)
     const selectedUsersObjects=usersStore.filter((e)=>selectedUsersId.includes(e.uid));
   await Promise.all(selectedUsersObjects.map(async (user,index)=>{
@@ -153,7 +153,7 @@ getUsers()
               </MDBBtn>
 
               <MDBBtn color='' onClick={() => submit()}>
-              {isSubmitting ? <ClipLoader size={15} color='white'/>:"Send"}
+              {isSubmitting ? <ClipLoader size={15} color='white'/>:"Submit"}
               </MDBBtn>
 
             </MDBModalFooter>
