@@ -62,7 +62,10 @@ const AddUser = () => {
           }
       ]
     });
-  newUserDetails.Nationality=data.map((e)=>e.name)[0];
+  newUserDetails.Nationality=data.map((e)=>e.name);
+  
+  localStorage.setItem("countries", JSON.stringify(newUserDetails.Nationality));
+
   if(user.Nationality[0]==='loading...'){
     setTimeout(() => {
       window.location.reload();

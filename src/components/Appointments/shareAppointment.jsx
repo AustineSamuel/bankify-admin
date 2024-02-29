@@ -46,12 +46,17 @@ const ShareAppointment = ({appointmentId}) => {
     setIsLoading(false);
   }
 
-  const selectUser=(userId)=>{
+  const selectUser=async (userId)=>{
 
     if(!selectedUsersId.includes(userId))setSelectedUsersId([userId,...selectedUsersId])
     else{
   const newList=selectedUsersId.filter((e)=>e!==userId);
-  setSelectedUsersId([...newList])
+  
+  setSelectedUsersId([...newList]);
+const user=usersStore.filter((user)=>user.uid===userId)[0] || {};
+  const newUser={...user,addedAppointments:user?.addedAppointments?.filter((e)=>e!==appointmentId) || []}
+      await updateData("Users",user.docId,newUser);
+        console.log("remove successful");
     }
   }
   useEffect(() => {
@@ -81,18 +86,22 @@ const [isSubmitting,setIsSubmitting]=useState(false);
   await Promise.all(selectedUsersObjects.map(async (user,index)=>{
     if(user?.addedAppointments){
       if(!user.addedAppointments.includes(appointmentId)){
+      console.log("add to existing apt...");
+
         const newUser={...user,addedAppointments:[appointmentId,...user.addedAppointments]}
         await updateData("Users",user.docId,newUser);
     }
     else{//remove from user dashboard
+      console.log("removing from existing...");
       const newUser={...user,addedAppointments:user?.addedAppointments?.filter((e)=>e!==appointmentId) || []}
       await updateData("Users",user.docId,newUser);
-      setSelectedUsersId(selectedUsersId.filter((e)=>e!==user.uid));
 
     }
   }
   else{
     //add new appointment list for user
+    console.log("adding new apt...");
+
     const newUser={...user,addedAppointments:[appointmentId]}
     await updateData("Users",user.docId,newUser);
   }
