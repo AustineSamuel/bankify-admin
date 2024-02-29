@@ -87,6 +87,8 @@ const [isSubmitting,setIsSubmitting]=useState(false);
     else{//remove from user dashboard
       const newUser={...user,addedAppointments:user?.addedAppointments?.filter((e)=>e!==appointmentId) || []}
       await updateData("Users",user.docId,newUser);
+      setSelectedUsersId(selectedUsersId.filter((e)=>e!==user.uid));
+
     }
   }
   else{
