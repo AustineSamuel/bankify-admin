@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import {BounceLoader} from 'react-spinners';
 import {toast} from 'react-hot-toast';
 import {useNavigate} from 'react-router-dom';
+import ShareAppointment from './shareAppointment';
 
 function Card({ appointment ,deleteCallback}) {
     const { appointmentId, type, dateTime, status, notes,docId} = appointment;
@@ -37,13 +38,14 @@ deleteCallback()
           <MDBCardText>Status: {status}</MDBCardText>
           <MDBCardText>Notes: {notes}</MDBCardText>
           <br/>
-          <div className='d-flex align-items-center' style={{width:"100%"}}>
-<MDBBtn onClick={()=>deleteItem()} color='dark' rounded>
-  {isDeleting ? <BounceLoader size={18} color='white'/>: <><Trash2/> Delete</>}</MDBBtn>
+          <div className='d-flex align-items-center justify-content-between' style={{width:"100%",padding:'5px'}}>
+<MDBBtn onClick={()=>deleteItem()} size='sm' color='dark' rounded>
+  {isDeleting ? <BounceLoader size={18} color='white'/>: <><Trash2 size={14}/> Delete</>}</MDBBtn>
 
-<MDBBtn color='light' rounded onClick={()=>Edit()}><Edit2/> Edit</MDBBtn>
-
+<MDBBtn color='light' size='sm' rounded onClick={()=>Edit()}><Edit2 size={14}/> Edit</MDBBtn>
           </div>
+<ShareAppointment appointmentId={appointmentId}/>
+
       </MDBCardBody>
       </MDBCard>
     );

@@ -79,7 +79,7 @@ setCountries([...countries]);
 
 </div>
 <br/>
-{isLoading && <ClipLoader/>}
+{isLoading && <div className='d-flex justify-content-center' style={{width:"100%"}}><ClipLoader/></div>}
   {countries?.map((text,textIndex)=>{ 
     return(<div className='listItem' key={textIndex+""+Date.now()}  color='light' style={{margin:"0 auto",width:"100%",borderRadius:10,marginTop:5}}>
         <div className='d-flex align-items-center justify-content-between'  style={{width:"100%"}}><span style={{padding:10}}>{text}</span>

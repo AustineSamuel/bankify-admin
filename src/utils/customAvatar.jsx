@@ -27,7 +27,7 @@ if(!size)size=40
       {loaded ? (
         <Avatar
           src={src}
-          alt={alt}
+          alt={alt ? alt:""}
           style={{ width: size, height:size, borderRadius: "50%" }}
         />
       ) : (

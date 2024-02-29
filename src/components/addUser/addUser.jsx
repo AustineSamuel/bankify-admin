@@ -32,7 +32,7 @@ const AddUser = () => {
     gender: ["Male","Female"],
     address: "",
     IdNumber:"",
-    Nationality:[],
+    Nationality:localStorage.getItem("countries") ? JSON.parse(localStorage.getItem("countries")) : ["loading..."],
     maritalStatus: ['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership'],
     status:['active','suspended'],
     Language:'',
@@ -62,7 +62,15 @@ const AddUser = () => {
           }
       ]
     });
-  newUserDetails.Nationality=data.map((e)=>e.name);
+  newUserDetails.Nationality=data.map((e)=>e.name)[0];
+  if(user.Nationality[0]==='loading...'){
+    setTimeout(() => {
+      window.location.reload();
+    }, [200])
+  }
+
+  user.Nationality=data.map((e)=>e.name);
+
   setNewUserDetails({...newUserDetails});
   }
 
