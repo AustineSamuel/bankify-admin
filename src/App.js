@@ -23,6 +23,7 @@ import EditProfile from './components/editProfile';
 import EditAppointment from './components/Appointments/EditAppoinment';
 import UpdateEmbassy from './components/Appointments/updateEmbassiess';
 import EditFaq from './components/faq';
+import AddCountry from './components/Appointments/addCountry';
 
 
 function App() {
@@ -100,6 +101,8 @@ const adminDetails=JSON.parse(sessionStorage.getItem("adminDetails"));
         <Route path='/AddAppointment' element={<AddAppointment/>}/>
         <Route path='/UsersBookings' element={<UserBookings/>}/>
         <Route path="/ReportBugs" element={<ReportBug/>}/>
+        <Route path="/AddCountry" element={<AddCountry/>}/>
+
         <Route path='/*' element={<Page404/>}/>
 
         

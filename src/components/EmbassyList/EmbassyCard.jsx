@@ -25,7 +25,7 @@ deleteCallback()
 
   const Edit=()=>{
     sessionStorage.setItem("EditEmbassy",JSON.stringify(embassy));
-  navigate("/EditEmbassy");
+ // navigate("/EditEmbassy");
   }
   
 
@@ -43,10 +43,10 @@ deleteCallback()
         <br />
         <strong>Address:</strong> {embassy.address}
         <br />
-        <strong>Contact Information:</strong>
+       <strong>Contact Information:</strong>
         <MDBListGroup flush>
           <MDBListGroupItem>Phone: {embassy.contactInformation.phone}</MDBListGroupItem>
-          <MDBListGroupItem>Email: {embassy.contactInformation.email}</MDBListGroupItem>
+          {/* <MDBListGroupItem>Email: {embassy.contactInformation.email}</MDBListGroupItem> */}
           <MDBListGroupItem>Website: {embassy.contactInformation.website}</MDBListGroupItem>
         </MDBListGroup>
         <strong>Operating Hours:</strong>
@@ -61,11 +61,11 @@ deleteCallback()
         <br />
         <strong>Appointment Booking Procedure:</strong> {embassy.appointmentBookingProcedure}
         <br />
-        <strong>Emergency Contact Information:</strong>
+         <strong>Emergency Contact Information:</strong>
         <MDBListGroup flush>
-          <MDBListGroupItem>Phone: {embassy.emergencyContactInformation.phone}</MDBListGroupItem>
+          {/* <MDBListGroupItem>Phone: {embassy.emergencyContactInformation.phone}</MDBListGroupItem> */}
           <MDBListGroupItem>Email: {embassy.emergencyContactInformation.email}</MDBListGroupItem>
-        </MDBListGroup>
+        </MDBListGroup> 
         <strong>Location Coordinates:</strong> Latitude: {embassy.locationCoordinates.latitude}, Longitude: {embassy.locationCoordinates.longitude}
     
 

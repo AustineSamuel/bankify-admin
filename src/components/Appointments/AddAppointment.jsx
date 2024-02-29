@@ -417,7 +417,7 @@ if(input?.data){
 
   
   {input?.data?.map((text,textIndex)=>{ 
-    return(<div className='listItem' key={textIndex+""+Date.now()} noBorders color='light' className='px-3 mb-2 rounded-3' style={{margin:"0 auto",width:"100%"}}>
+    return(<div key={textIndex+""+Date.now()} color='light' className='listItem px-3 mb-2 rounded-3' style={{margin:"0 auto",width:"100%"}}>
         <div className='d-flex align-items-center justify-content-between'  style={{width:"100%"}}><span style={{padding:10}}>{text}</span>
          <MDBBtn rounded color='primary' onClick={()=>{
               console.log(text,textIndex);

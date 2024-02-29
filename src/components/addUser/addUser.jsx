@@ -32,38 +32,7 @@ const AddUser = () => {
     gender: ["Male","Female"],
     address: "",
     IdNumber:"",
-    Nationality:[
-      "Australia",
-      "Brazil",
-      "Canada",
-      "China",
-      "France",
-      "Germany",
-      "India",
-      "Indonesia",
-      "Italy",
-      "Japan",
-      "Mexico",
-      "Netherlands",
-      "Nigeria",
-      "Pakistan",
-      "Philippines",
-      "Russia",
-      "Saudi Arabia",
-      "South Africa",
-      "South Korea",
-      "Spain",
-      "Sweden",
-      "Switzerland",
-      "Taiwan",
-      "Thailand",
-      "Turkey",
-      "Ukraine",
-      "United Arab Emirates",
-      "United Kingdom",
-      "United States",
-      "Vietnam"
-    ],
+    Nationality:[],
     maritalStatus: ['Married', 'Single', 'Divorced', 'Widowed', 'Separated', 'In a relationship', 'Engaged', 'Domestic partnership'],
     status:['active','suspended'],
     Language:'',
@@ -81,7 +50,27 @@ const AddUser = () => {
   const navigate=useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(null);
   const [newUserDetails, setNewUserDetails] = useState({ ...user,gender:"",permissions:"user",status:"active",Nationality:user.Nationality[0]});
-const [isUploading,setIsUploading]=useState(false);
+
+  const initCountries=async ()=>{
+    const data=  await docQr("Countries",{
+      max:801,
+      whereClauses:[
+          {
+              field:"name",
+              operator:"!=",
+              value:""
+          }
+      ]
+    });
+  newUserDetails.Nationality=data.map((e)=>e.name);
+  setNewUserDetails({...newUserDetails});
+  }
+
+  useEffect(()=>{
+    initCountries()
+  },[]);
+
+  const [isUploading,setIsUploading]=useState(false);
   const handleImageChange = async (e) => {
     setIsUploading(true)
     const file = e.target.files[0];

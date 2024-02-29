@@ -1,8 +1,10 @@
 import { MDBBadge, MDBIcon } from 'mdb-react-ui-kit';
 import CustomAvatar from '../utils/customAvatar';
 import {useState} from 'react';
-import {Menu} from 'react-feather';
+import {Menu, Plus} from 'react-feather';
 import {getCurrentDateTime} from '../Logics/date'
+import {IconButton} from '@mui/material';
+import {useNavigate} from 'react-router-dom'; 
 import {
     MDBModal,
     MDBModalDialog,
@@ -14,9 +16,12 @@ import {
     MDBBtn
   } from 'mdb-react-ui-kit';
 import Notifications from './notifications';
+import useUserDetails from '../Hooks/userUserDetails';
 
 export default function UserNav({openMenu,adminDetails}) {
     const [openNotifications,setOpenNotifications]=useState(false);
+    const {user}=useUserDetails();
+    const navigate=useNavigate()
     return (
         
 <>
@@ -52,7 +57,9 @@ export default function UserNav({openMenu,adminDetails}) {
 </div>}
 
             <div className='d-flex align-items-center'>
-
+<IconButton onClick={()=>{
+  navigate("/AddCountry");
+}}> <Plus  /></IconButton>
                 <a onClick={()=>{
                     setOpenNotifications(true);
                 }} className='mx-3' href='#!'>
@@ -62,7 +69,7 @@ export default function UserNav({openMenu,adminDetails}) {
                     </MDBBadge>
                 </a>
 
-               <div style={{padding:1}}> <CustomAvatar src="/images/user.png" alt="User Avatar" /></div>
+               <div style={{padding:1}}> <CustomAvatar src={user?.biometricData?.passport ? user?.biometricData?.passport:"/images/user.png"} alt="User Avatar" /></div>
 
             </div>
 

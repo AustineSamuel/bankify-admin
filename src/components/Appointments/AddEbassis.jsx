@@ -25,42 +25,10 @@ import { generateUniqueString } from '../../Logics/date';
 const AddEmbassy = () => {
   const embassy = {
     name: "",
-    country:[
-      "Australia",
-      "Brazil",
-      "Canada",
-      "China",
-      "France",
-      "Germany",
-      "India",
-      "Indonesia",
-      "Italy",
-      "Japan",
-      "Mexico",
-      "Netherlands",
-      "Nigeria",
-      "Pakistan",
-      "Philippines",
-      "Russia",
-      "Saudi Arabia",
-      "South Africa",
-      "South Korea",
-      "Spain",
-      "Sweden",
-      "Switzerland",
-      "Taiwan",
-      "Thailand",
-      "Turkey",
-      "Ukraine",
-      "United Arab Emirates",
-      "United Kingdom",
-      "United States",
-      "Vietnam"
-    ],
+    country:["loading..."],
     city: "",
     address: "",
     contactInformation: {
-      phone: "",
       email: "",
       website: ""
     },
@@ -74,7 +42,6 @@ const AddEmbassy = () => {
     servicesOffered: ["Visa Services", "Passport Issuance", "Consular Assistance"],
     appointmentBookingProcedure: "Appointments can be booked online through our website or by calling our office during business hours.",
     emergencyContactInformation: {
-      phone: "",
       email: ""
     },
     locationCoordinates: {
@@ -89,6 +56,29 @@ const AddEmbassy = () => {
 
   const [Embassy, setEmbassy] = useState({ ...embassy,embassy_id:"embassy_"+Date.now()+''+generateUniqueString(),
   country:embassy.country[0]});
+
+  const initCountries=async ()=>{
+    console.log("... getting countries")
+    const data=  await docQr("Countries",{
+      max:801,
+      whereClauses:[
+          {
+              field:"name",
+              operator:"!=",
+              value:""
+          }
+      ]
+    });
+    console.log(data);
+  Embassy.country=data.map((e)=>e.name);
+  setEmbassy({...Embassy});
+  }
+
+  useEffect(()=>{
+    console.log("firing useEffect for initCountries")
+    initCountries()
+  },[]);
+
 const handleTextChange=(e,name)=>{
   const {value}=e.target
   setEmbassy({...Embassy,[name]:value})
