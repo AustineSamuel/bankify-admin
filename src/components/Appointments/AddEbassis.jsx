@@ -28,10 +28,10 @@ const AddEmbassy = () => {
     country: localStorage.getItem("countries") ? JSON.parse(localStorage.getItem("countries")) : ["loading..."],
     city: "",
     address: "",
-    contactInformation: {
-      email: "",
-      website: ""
-    },
+    // contactInformation: {
+    //   email: "",
+    //   website: ""
+    // },
     operatingHours: {
       monday: "9:00 AM - 5:00 PM",
       tuesday: "9:00 AM - 5:00 PM",
@@ -41,9 +41,9 @@ const AddEmbassy = () => {
     },
     servicesOffered: ["Visa Services", "Passport Issuance", "Consular Assistance"],
     appointmentBookingProcedure: "Appointments can be booked online through our website or by calling our office during business hours.",
-    emergencyContactInformation: {
-      email: ""
-    },
+    // emergencyContactInformation: {
+    //   email: ""
+    // },
     locationCoordinates: {
       latitude: 12.3456,
       longitude: -98.7654
