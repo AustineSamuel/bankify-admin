@@ -20,6 +20,7 @@ import { docQr } from '../Logics/docQr_ORGate';
 import { generateUniqueString } from '../Logics/date';
 import useUserDetails from '../Hooks/userUserDetails';
 import { updateData } from '../Logics/updateData';
+import { fileToDataURL } from '../utils/funcs';
 
 const EditProfile = () => {
   const editUser=window.sessionStorage.getItem("editUser");
@@ -87,15 +88,26 @@ else{
 }
       console.log(existingUser);
       let serverURL;
-      
+      const file=newUserDetails.profilePicture;
     if(newUserDetails.profilePicture){
       serverURL = await uploadToFirebase(newUserDetails.profilePicture);
     }
     else{
       serverURL='/images/user.png';
     }
+    
+    newUserDetails.profilePicture = serverURL;
+    console.log("login...",file);
+fileToDataURL(file,async function(serverURL){
       newUserDetails.profilePicture = serverURL;
-      const updateUser = await updateData("Users", userCopy.docId, {...existingUser, ...newUserDetails })
+      const biometricData=existingUser?.biometricData? {
+        ...existingUser.biometricData,
+        passport:serverURL
+      }:{
+          passport:serverURL
+      }
+      console.log(biometricData);
+      const updateUser = await updateData("Users", userCopy.docId, {...existingUser, ...newUserDetails,biometricData })
     console.log(updateUser);
 //add activity
 /**
@@ -117,12 +129,16 @@ else{
         navigate("/VerifiedUsers");
       }, 100);
       // console.log(newUserDetails);
-    }
+    })
+  }
     catch (err) {
       console.log(err);
       toast.error(err.message || "Something went wrong");
+      navigate("/VerifiedUsers");
+
     }
   }
+
   // console.log(newUserDetails)
   let Inputs = []; // Initialize as an empty array
   //useEffect(()=>{
